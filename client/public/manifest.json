@@ -1,0 +1,18 @@
+{
+  "short_name": "MzingoPoint",
+  "name": "Mzingo Point - Secure Storage Mombasa",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0F2A4A",
+  "theme_color": "#0F2A4A",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "description": "Safe, reliable belongings and luggage storage in Mombasa CBD, Kenya.",
+  "lang": "en-KE"
+}

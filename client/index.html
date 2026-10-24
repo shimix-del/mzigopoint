@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230F2A4A'><path d='M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#0F2A4A" />
+    <meta name="description" content="Mzingo Point - Secure luggage & belongings storage in Mombasa, Kenya. CCTV protected, M-Pesa payments, daily/weekly/monthly rates." />
+    <meta name="keywords" content="luggage storage Mombasa, belongings storage Mombasa, baggage locker Mombasa, mzingo point, safe storage Kenya, SGR luggage storage Mombasa" />
+    <meta property="og:title" content="Mzingo Point | Secure Belongings Storage Mombasa" />
+    <meta property="og:description" content="Leave your things. Go get your future. Safe, CCTV-monitored luggage and box storage on Moi Avenue, Mombasa." />
+    <meta property="og:type" content="website" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Mzingo Point" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <title>Mzingo Point | Secure Belongings Storage in Mombasa</title>
+  </head>
+  <body class="bg-[#F8F9FA] text-gray-800 antialiased selection:bg-[#E75A2D] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>
