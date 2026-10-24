@@ -59,13 +59,16 @@ app.get('/api/health', (req, res) => {
 
 // Serve frontend build in production
 const clientDist = path.join(__dirname, '../client/dist');
-if (fs.existsSync(clientDist)) {
-  app.use(express.static(clientDist));
+const rootDist = path.join(__dirname, '..');
+const staticDist = fs.existsSync(clientDist) ? clientDist : rootDist;
+
+if (fs.existsSync(path.join(staticDist, 'index.html'))) {
+  app.use(express.static(staticDist));
   app.use((req, res, next) => {
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return next();
     }
-    res.sendFile(path.join(clientDist, 'index.html'));
+    res.sendFile(path.join(staticDist, 'index.html'));
   });
 }
 
