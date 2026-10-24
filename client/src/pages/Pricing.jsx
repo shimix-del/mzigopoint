@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Calculator, Check, ArrowRight, ShieldCheck, AlertCircle, Info, Luggage } from 'lucide-react';
+import { Calculator, Check, ArrowRight, ShieldCheck, AlertCircle, Info, Luggage, Sparkles, Tag } from 'lucide-react';
 import { translations } from '../translations';
+import { TagGrommet, DhowIcon } from '../components/SwahiliMotifs';
 
 export default function Pricing({ lang, setView, setBookingPrefill }) {
   const t = translations[lang];
@@ -16,7 +17,7 @@ export default function Pricing({ lang, setView, setBookingPrefill }) {
       week: 900,
       month: 3200,
       popular: false,
-      tag: "Ideal for interviews & exams"
+      tag: "Interviews & Exams"
     },
     medium: {
       name: "Medium Luggage",
@@ -27,7 +28,7 @@ export default function Pricing({ lang, setView, setBookingPrefill }) {
       week: 1500,
       month: 5500,
       popular: true,
-      tag: "Most popular for travellers"
+      tag: "Most Popular"
     },
     large: {
       name: "Large Luggage",
@@ -38,7 +39,7 @@ export default function Pricing({ lang, setView, setBookingPrefill }) {
       week: 2400,
       month: 8800,
       popular: false,
-      tag: "Great for movers & tourists"
+      tag: "Relocation & Long Stay"
     },
     xlarge: {
       name: "Extra Large / Bulky",
@@ -49,7 +50,7 @@ export default function Pricing({ lang, setView, setBookingPrefill }) {
       week: 4500,
       month: 16000,
       popular: false,
-      tag: "Students & home relocations"
+      tag: "Students & Bulk"
     }
   };
 
@@ -97,293 +98,307 @@ export default function Pricing({ lang, setView, setBookingPrefill }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-16">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#E75A2D] bg-[#E75A2D]/10 px-3.5 py-1.5 rounded-full">
-          {t.pricing.badge}
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-extrabold font-['Poppins'] text-[#0F2A4A]">
-          {t.pricing.title}
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-          {t.pricing.subtitle}
-        </p>
-      </div>
+    <div className="min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
+      <div className="max-w-7xl mx-auto space-y-16">
 
-      {/* PRICING RATE CARDS / TABLE */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Object.entries(rates).map(([key, item]) => (
-          <div
-            key={key}
-            className={`rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all relative ${
-              item.popular
-                ? 'bg-[#0F2A4A] text-white shadow-xl ring-2 ring-[#E75A2D]'
-                : 'bg-white text-gray-900 border border-gray-200 shadow-xs hover:border-gray-300'
-            }`}
-          >
-            {item.popular && (
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E75A2D] text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
-                {lang === 'sw' ? 'Inayopendwa Zaidi' : 'Most Popular'}
-              </span>
-            )}
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF6B4A]/10 border border-[#FF6B4A]/20 text-[#FF6B4A] text-xs font-bold uppercase tracking-widest">
+            <Tag className="w-3.5 h-3.5" />
+            <span>{lang === 'sw' ? 'Bei na Viwango vya Uwazi' : 'Transparent Mombasa Rates'}</span>
+          </div>
 
-            <div>
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-bold text-lg font-['Poppins']">
-                  {lang === 'sw' ? item.swName : item.name}
-                </h3>
-                <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                  item.popular ? 'bg-white/20 text-amber-300' : 'bg-gray-100 text-gray-600'
-                }`}>
-                  {key}
-                </span>
-              </div>
+          <h1 className="text-3xl sm:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
+            {lang === 'sw' ? 'Gharama za Uhifadhi wa Mzigo' : 'Simple, Transparent Storage Pricing'}
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+            {lang === 'sw'
+              ? 'Lipa kwa siku, wiki, au mwezi bila ada za siri. Punguzo kubwa la bei kwa uhifadhi wa muda mrefu.'
+              : 'Affordable daily, weekly, and monthly rates. Automatic bulk savings applied for 7+ days and 30+ days.'}
+          </p>
+        </div>
 
-              <p className={`text-xs mb-6 min-h-[36px] ${item.popular ? 'text-gray-300' : 'text-gray-500'}`}>
-                {lang === 'sw' ? item.swExamples : item.examples}
-              </p>
-
-              {/* Price figures */}
-              <div className="space-y-3 mb-6 pb-6 border-b border-gray-200/40">
-                <div>
-                  <span className="text-xs uppercase tracking-wider opacity-75 block">Per Day / Kwa Siku</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl sm:text-3xl font-black">KES {item.day}</span>
-                    <span className="text-xs opacity-75">/ day</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 pt-2 text-xs">
-                  <div className={`p-2 rounded-xl ${item.popular ? 'bg-white/10' : 'bg-gray-50'}`}>
-                    <span className="block opacity-75 text-[10px] uppercase">Per Week</span>
-                    <strong className="text-sm">KES {item.week}</strong>
-                  </div>
-                  <div className={`p-2 rounded-xl ${item.popular ? 'bg-white/10' : 'bg-gray-50'}`}>
-                    <span className="block opacity-75 text-[10px] uppercase">Per Month</span>
-                    <strong className="text-sm">KES {item.month}</strong>
-                  </div>
-                </div>
-              </div>
-
-              {/* Features bullets */}
-              <ul className="space-y-2.5 text-xs mb-6">
-                <li className="flex items-center gap-2">
-                  <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                  <span>24/7 CCTV surveillance & rack tag</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                  <span>Instant M-Pesa or Cash payment</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                  <span>Extend online anytime</span>
-                </li>
-              </ul>
-            </div>
-
-            <button
-              onClick={() => {
-                setCalcSize(key);
-                const el = document.getElementById('price-calculator');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className={`w-full py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+        {/* PRICING RATE CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Object.entries(rates).map(([key, item]) => (
+            <div
+              key={key}
+              className={`rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 relative border ${
                 item.popular
-                  ? 'bg-[#E75A2D] hover:bg-[#d0451b] text-white shadow-md'
-                  : 'bg-[#0F2A4A] hover:bg-[#1a406c] text-white'
+                  ? 'bg-[#0B2545] text-white shadow-2xl ring-2 ring-[#FF6B4A] scale-102 lg:-translate-y-2'
+                  : 'bg-white text-gray-900 border-gray-200/90 shadow-md hover:shadow-xl hover:-translate-y-1'
               }`}
             >
-              <span>{lang === 'sw' ? 'Chagua Hii' : 'Calculate & Book'}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* INTERACTIVE PRICE CALCULATOR */}
-      <div id="price-calculator" className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-lg">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
-              <Calculator className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold font-['Poppins'] text-[#0F2A4A]">
-                {t.pricing.calculatorTitle}
-              </h2>
-              <p className="text-xs text-gray-500">
-                {t.pricing.calculatorDesc}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* Inputs */}
-            <div className="space-y-5">
-              {/* Size selection */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {t.pricing.selectSize}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {Object.entries(rates).map(([k, item]) => (
-                    <button
-                      key={k}
-                      type="button"
-                      onClick={() => setCalcSize(k)}
-                      className={`p-3 rounded-xl text-left border transition-all ${
-                        calcSize === k
-                          ? 'border-[#E75A2D] bg-[#E75A2D]/10 text-[#0F2A4A] font-bold shadow-xs'
-                          : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                      }`}
-                    >
-                      <span className="block text-xs">{lang === 'sw' ? item.swName : item.name}</span>
-                      <span className="block text-[11px] text-[#E75A2D] font-extrabold mt-0.5">KES {item.day}/day</span>
-                    </button>
-                  ))}
+              {item.popular && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#FF6B4A] to-[#13B5B1] text-white text-[10px] font-mono font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+                  {lang === 'sw' ? '★ INAYOPENDEZWA ZAIDI' : '★ MOST POPULAR'}
                 </div>
-              </div>
+              )}
 
-              {/* Quantity */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {t.pricing.selectQty}
-                </label>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setCalcQty(Math.max(1, calcQty - 1))}
-                    className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-base flex items-center justify-center"
-                  >
-                    −
-                  </button>
-                  <span className="w-12 text-center text-lg font-bold text-[#0F2A4A]">
-                    {calcQty}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setCalcQty(calcQty + 1)}
-                    className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-base flex items-center justify-center"
-                  >
-                    +
-                  </button>
-                  <span className="text-xs text-gray-500 ml-2">item(s)</span>
-                </div>
-              </div>
-
-              {/* Duration in Days */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">
-                    {t.pricing.selectDays}
-                  </label>
-                  <span className="text-xs font-extrabold text-[#0F2A4A] bg-gray-100 px-2 py-0.5 rounded">
-                    {calcDays} {calcDays === 1 ? 'day' : 'days'}
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase font-bold text-[#FF6B4A] block">
+                      {item.tag}
+                    </span>
+                    <h3 className="font-black text-xl font-['Syne']">
+                      {lang === 'sw' ? item.swName : item.name}
+                    </h3>
+                  </div>
+                  <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${
+                    item.popular ? 'bg-white/10 text-[#13B5B1]' : 'bg-gray-100 text-gray-600'
+                  }`}>
+                    {key}
                   </span>
                 </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="60"
-                  value={calcDays}
-                  onChange={(e) => setCalcDays(parseInt(e.target.value) || 1)}
-                  className="w-full accent-[#E75A2D] h-2 bg-gray-200 rounded-lg cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-gray-400 mt-1">
-                  <span>1 day</span>
-                  <span>1 week (7d)</span>
-                  <span>1 month (30d)</span>
-                  <span>2 months (60d)</span>
-                </div>
-              </div>
 
-              {/* Fragile handling */}
-              <label className="flex items-center gap-2.5 text-xs text-gray-700 cursor-pointer pt-1">
-                <input
-                  type="checkbox"
-                  checked={isFragile}
-                  onChange={(e) => setIsFragile(e.target.checked)}
-                  className="w-4 h-4 text-[#E75A2D] rounded border-gray-300 focus:ring-[#E75A2D]"
-                />
-                <span>{t.pricing.fragileAddon}</span>
-              </label>
-            </div>
+                <p className={`text-xs mb-6 min-h-[36px] ${item.popular ? 'text-gray-300' : 'text-gray-500'}`}>
+                  {lang === 'sw' ? item.swExamples : item.examples}
+                </p>
 
-            {/* Output Calculation Card */}
-            <div className="bg-[#0F2A4A] rounded-2xl p-6 sm:p-8 text-white space-y-6 flex flex-col justify-between shadow-md">
-              <div className="space-y-4">
-                <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
-                  Cost Breakdown
-                </span>
-
-                <div className="space-y-2 text-xs text-gray-300 pb-4 border-b border-white/10">
-                  <div className="flex justify-between">
-                    <span>Item Size:</span>
-                    <strong className="text-white capitalize">{calcSize}</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Quantity:</span>
-                    <strong className="text-white">{calcQty} item(s)</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Duration:</span>
-                    <strong className="text-white">{calcDays} day(s)</strong>
-                  </div>
-                  {calcDays >= 7 && (
-                    <div className="flex justify-between text-emerald-400">
-                      <span>Long-term Savings Applied:</span>
-                      <strong>Active Discount</strong>
+                {/* Rates breakdown */}
+                <div className="space-y-3 mb-6 pb-6 border-b border-gray-200/40">
+                  <div>
+                    <span className="text-[10px] uppercase font-mono tracking-wider opacity-75 block">Per Day / Kwa Siku</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-black font-['Syne']">KES {item.day}</span>
+                      <span className="text-xs opacity-75">/ day</span>
                     </div>
-                  )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-2 text-xs">
+                    <div className={`p-2.5 rounded-xl ${item.popular ? 'bg-white/10' : 'bg-gray-50'}`}>
+                      <span className="block opacity-75 text-[10px] font-mono uppercase">Per Week</span>
+                      <strong className="text-sm font-['Syne']">KES {item.week}</strong>
+                    </div>
+                    <div className={`p-2.5 rounded-xl ${item.popular ? 'bg-white/10' : 'bg-gray-50'}`}>
+                      <span className="block opacity-75 text-[10px] font-mono uppercase">Per Month</span>
+                      <strong className="text-sm font-['Syne']">KES {item.month}</strong>
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <span className="text-xs text-gray-300 block">{t.pricing.estimatedTotal}</span>
-                  <div className="text-3xl sm:text-4xl font-black text-amber-400 font-['Poppins']">
-                    KES {calculatedCost.toLocaleString()}
-                  </div>
-                  <p className="text-[11px] text-gray-300 mt-1">
-                    No hidden charges. Exact total payable.
-                  </p>
-                </div>
+                {/* Features */}
+                <ul className="space-y-2.5 text-xs mb-6">
+                  <li className="flex items-center gap-2">
+                    <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-[#13B5B1]' : 'text-emerald-600'}`} />
+                    <span>24/7 CCTV surveillance & numbered bay</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-[#13B5B1]' : 'text-emerald-600'}`} />
+                    <span>Instant M-Pesa STK or cash at counter</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className={`w-4 h-4 shrink-0 ${item.popular ? 'text-[#13B5B1]' : 'text-emerald-600'}`} />
+                    <span>Free online extension if delayed</span>
+                  </li>
+                </ul>
               </div>
 
               <button
                 type="button"
-                onClick={handleBookWithCalculated}
-                className="w-full bg-[#E75A2D] hover:bg-[#d0451b] text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                onClick={() => {
+                  setCalcSize(key);
+                  const el = document.getElementById('price-calculator');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`w-full py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                  item.popular
+                    ? 'bg-[#FF6B4A] hover:bg-[#e85535] text-white shadow-lg'
+                    : 'bg-[#0B2545] hover:bg-[#163a63] text-white'
+                }`}
               >
-                <span>{t.pricing.bookWithThis}</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{lang === 'sw' ? 'Piga Hesabu na Uhifadhi' : 'Calculate & Book'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
+            </div>
+          ))}
+        </div>
+
+        {/* INTERACTIVE PRICE CALCULATOR */}
+        <div id="price-calculator" className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-xl relative overflow-hidden">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
+              <div className="w-12 h-12 rounded-2xl bg-[#FF6B4A]/10 text-[#FF6B4A] flex items-center justify-center shrink-0">
+                <Calculator className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-black font-['Syne',sans-serif] text-[#0B2545]">
+                  {t.pricing.calculatorTitle}
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+                  {t.pricing.calculatorDesc}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Inputs Column */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider mb-2.5">
+                    {t.pricing.selectSize}
+                  </label>
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {Object.entries(rates).map(([k, item]) => (
+                      <button
+                        key={k}
+                        type="button"
+                        onClick={() => setCalcSize(k)}
+                        className={`p-3.5 rounded-2xl text-left border transition-all ${
+                          calcSize === k
+                            ? 'border-[#FF6B4A] bg-[#FF6B4A]/10 text-[#0B2545] ring-2 ring-[#FF6B4A]/20 shadow-xs'
+                            : 'border-gray-200 hover:border-gray-300 text-gray-700 bg-gray-50/50'
+                        }`}
+                      >
+                        <span className="block text-xs font-bold font-['Syne']">{lang === 'sw' ? item.swName : item.name}</span>
+                        <span className="block text-[11px] text-[#FF6B4A] font-extrabold font-mono mt-0.5">KES {item.day}/day</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quantity */}
+                <div>
+                  <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider mb-2">
+                    {t.pricing.selectQty}
+                  </label>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setCalcQty(Math.max(1, calcQty - 1))}
+                      className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-[#0B2545] font-bold text-lg flex items-center justify-center transition-colors"
+                    >
+                      −
+                    </button>
+                    <span className="w-14 text-center text-xl font-black font-['Syne'] text-[#0B2545]">
+                      {calcQty}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setCalcQty(calcQty + 1)}
+                      className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-[#0B2545] font-bold text-lg flex items-center justify-center transition-colors"
+                    >
+                      +
+                    </button>
+                    <span className="text-xs text-gray-500 font-medium">bag(s) or box(es)</span>
+                  </div>
+                </div>
+
+                {/* Duration Slider */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                      {t.pricing.selectDays}
+                    </label>
+                    <span className="text-xs font-bold text-white bg-[#0B2545] px-2.5 py-1 rounded-lg font-mono">
+                      {calcDays} {calcDays === 1 ? 'day' : 'days'}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="60"
+                    value={calcDays}
+                    onChange={(e) => setCalcDays(parseInt(e.target.value) || 1)}
+                    className="w-full accent-[#FF6B4A] h-2 bg-gray-200 rounded-lg cursor-pointer"
+                  />
+                  <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1.5">
+                    <span>1 day</span>
+                    <span>7 days (Weekly discount)</span>
+                    <span>30 days (Monthly discount)</span>
+                    <span>60 days</span>
+                  </div>
+                </div>
+
+                {/* Fragile */}
+                <label className="flex items-center gap-3 text-xs text-gray-700 cursor-pointer pt-1">
+                  <input
+                    type="checkbox"
+                    checked={isFragile}
+                    onChange={(e) => setIsFragile(e.target.checked)}
+                    className="w-4 h-4 text-[#FF6B4A] rounded border-gray-300 focus:ring-[#FF6B4A]"
+                  />
+                  <span className="font-medium">{t.pricing.fragileAddon}</span>
+                </label>
+              </div>
+
+              {/* Output Column */}
+              <div className="lg:col-span-5 bg-[#0B2545] rounded-3xl p-6 sm:p-8 text-white space-y-6 flex flex-col justify-between shadow-xl border border-white/10 relative overflow-hidden">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#13B5B1] font-bold">
+                      Calculated Luggage Quote
+                    </span>
+                    {calcDays >= 7 && (
+                      <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold">
+                        DISCOUNT ACTIVE
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 text-xs text-gray-300 pb-4 border-b border-white/10 font-mono">
+                    <div className="flex justify-between">
+                      <span>Size:</span>
+                      <strong className="text-white capitalize">{calcSize}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Quantity:</span>
+                      <strong className="text-white">{calcQty} item(s)</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Duration:</span>
+                      <strong className="text-white">{calcDays} day(s)</strong>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs text-gray-300 block">{t.pricing.estimatedTotal}</span>
+                    <div className="text-3xl sm:text-4xl font-black font-['Syne'] text-amber-400 mt-1">
+                      KES {calculatedCost.toLocaleString()}
+                    </div>
+                    <p className="text-[11px] text-gray-400 mt-1">
+                      Exact total payable online or at Moi Avenue counter.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleBookWithCalculated}
+                  className="w-full bg-[#FF6B4A] hover:bg-[#e85535] text-white py-4 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group"
+                >
+                  <span>{t.pricing.bookWithThis}</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* POLICY NOTES */}
-      <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-8 border border-amber-200/70 space-y-4">
-        <h3 className="font-bold text-base text-[#0F2A4A] font-['Poppins'] flex items-center gap-2">
-          <Info className="w-5 h-5 text-amber-600 shrink-0" />
-          <span>Storage Rules & Policies (Sheria na Masharti)</span>
-        </h3>
+        {/* POLICY NOTES */}
+        <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-8 border border-amber-200/70 space-y-4">
+          <h3 className="font-black text-base text-[#0B2545] font-['Syne'] flex items-center gap-2">
+            <Info className="w-5 h-5 text-amber-600 shrink-0" />
+            <span>Mombasa Storage Policies & Legal Bailment</span>
+          </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-700">
-          <div className="p-3.5 bg-white rounded-xl border border-gray-200 space-y-1">
-            <strong className="text-[#0F2A4A] block">Minimum Charge</strong>
-            <p className="text-gray-600 leading-relaxed">{t.pricing.ratesNotice}</p>
-          </div>
-          <div className="p-3.5 bg-white rounded-xl border border-gray-200 space-y-1">
-            <strong className="text-[#0F2A4A] block">Late Pick-Up Fee</strong>
-            <p className="text-gray-600 leading-relaxed">{t.pricing.lateNotice}</p>
-          </div>
-          <div className="p-3.5 bg-white rounded-xl border border-gray-200 space-y-1">
-            <strong className="text-[#0F2A4A] block">Unclaimed Items Policy</strong>
-            <p className="text-gray-600 leading-relaxed">{t.pricing.unclaimedNotice}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-700">
+            <div className="p-4 bg-white rounded-2xl border border-gray-200 space-y-1">
+              <strong className="text-[#0B2545] block font-bold">Minimum Charge</strong>
+              <p className="text-gray-600 leading-relaxed">{t.pricing.ratesNotice}</p>
+            </div>
+            <div className="p-4 bg-white rounded-2xl border border-gray-200 space-y-1">
+              <strong className="text-[#0B2545] block font-bold">Late Pick-Up Fee</strong>
+              <p className="text-gray-600 leading-relaxed">{t.pricing.lateNotice}</p>
+            </div>
+            <div className="p-4 bg-white rounded-2xl border border-gray-200 space-y-1">
+              <strong className="text-[#0B2545] block font-bold">Unclaimed Items Policy</strong>
+              <p className="text-gray-600 leading-relaxed">{t.pricing.unclaimedNotice}</p>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );

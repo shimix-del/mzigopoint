@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Search, HelpCircle, ChevronDown, ChevronUp, AlertCircle, ShieldAlert } from 'lucide-react';
+import { Search, HelpCircle, ChevronDown, ChevronUp, AlertCircle, ShieldAlert, Sparkles, MessageSquare } from 'lucide-react';
 import { translations } from '../translations';
+import { DhowIcon, TagGrommet } from '../components/SwahiliMotifs';
 
 export default function Faq({ lang, setView }) {
   const t = translations[lang];
@@ -73,114 +74,129 @@ export default function Faq({ lang, setView }) {
   });
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
-      {/* Header */}
-      <div className="text-center space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#E75A2D] bg-[#E75A2D]/10 px-3.5 py-1.5 rounded-full">
-          Knowledge Base & Help
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold font-['Poppins'] text-[#0F2A4A]">
-          {lang === 'sw' ? 'Maswali Yanayoulizwa Mara kwa Mara' : 'Frequently Asked Questions'}
-        </h1>
-        <p className="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto">
-          {lang === 'sw'
-            ? 'Majibu ya haraka kuhusu usalama, vitu vinavyoruhusiwa, malipo ya M-Pesa, na jinsi ya kuchukua mzigo wako.'
-            : 'Everything you need to know about our security rules, prohibited goods, M-Pesa payments, and collection policies.'}
-        </p>
-      </div>
+    <div className="min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
+      <div className="max-w-4xl mx-auto space-y-12">
 
-      {/* Search Input */}
-      <div className="relative max-w-xl mx-auto">
-        <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder={lang === 'sw' ? 'Tafuta swali lolote (mfano: M-Pesa, Laptop, Kuchelewa)...' : 'Search any question (e.g., M-Pesa, Laptop, Prohibited, Late)...'}
-          className="w-full text-sm pl-12 pr-4 py-3.5 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#E75A2D] shadow-xs"
-        />
-      </div>
-
-      {/* Category Pills */}
-      <div className="flex flex-wrap justify-center gap-2 text-xs">
-        {[
-          { id: 'all', label: lang === 'sw' ? 'Yote' : 'All Questions' },
-          { id: 'items', label: lang === 'sw' ? 'Vitu Visivyoruhusiwa' : 'Prohibited Goods' },
-          { id: 'collection', label: lang === 'sw' ? 'Kuchukua Mzigo' : 'Collection & Receipts' },
-          { id: 'duration', label: lang === 'sw' ? 'Kuongeza Muda' : 'Extending Storage' },
-          { id: 'safety', label: lang === 'sw' ? 'Usalama wa Vifaa' : 'Safety & Electronics' },
-          { id: 'payment', label: lang === 'sw' ? 'Malipo ya M-Pesa' : 'Payments & Pricing' }
-        ].map((c) => (
-          <button
-            key={c.id}
-            onClick={() => setActiveCategory(c.id)}
-            className={`px-3.5 py-1.5 rounded-full font-semibold transition-all ${
-              activeCategory === c.id
-                ? 'bg-[#0F2A4A] text-white shadow-xs'
-                : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
-          >
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Prohibited items callout alert */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-start gap-3">
-        <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-        <div>
-          <strong className="block font-bold mb-0.5">Notice on Prohibited Storage:</strong>
-          Perishables (raw meat, seafood), gas cylinders, firearms, and illegal substances are strictly prohibited on premises and subject to immediate confiscation and police notification.
-        </div>
-      </div>
-
-      {/* Accordion FAQ Items */}
-      <div className="space-y-3">
-        {filteredFaqs.length > 0 ? (
-          filteredFaqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs transition-all"
-            >
-              <button
-                onClick={() => setExpandedFaq(expandedFaq === idx ? -1 : idx)}
-                className="w-full text-left p-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-[#0F2A4A] hover:bg-gray-50/80 transition-colors"
-              >
-                <span>{lang === 'sw' ? faq.q_sw : faq.q_en}</span>
-                {expandedFaq === idx ? (
-                  <ChevronUp className="w-5 h-5 text-[#E75A2D] shrink-0" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-400 shrink-0" />
-                )}
-              </button>
-              {expandedFaq === idx && (
-                <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100">
-                  {lang === 'sw' ? faq.a_sw : faq.a_en}
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="text-center py-8 text-xs text-gray-400">
-            No FAQs found matching "{searchTerm}". Try another keyword or contact our support team.
+        {/* Header */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#13B5B1]/10 border border-[#13B5B1]/20 text-[#0B2545] text-xs font-bold uppercase tracking-widest">
+            <HelpCircle className="w-3.5 h-3.5 text-[#13B5B1]" />
+            <span>{lang === 'sw' ? 'Msaada na Mwongozo • Mombasa' : 'Knowledge Base & Answers'}</span>
           </div>
-        )}
-      </div>
 
-      {/* Still need help strip */}
-      <div className="bg-[#0F2A4A] rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h4 className="font-bold text-base font-['Poppins']">Have a specific question about your items?</h4>
-          <p className="text-xs text-gray-300 mt-0.5">Our Mombasa attendants are ready to assist you on WhatsApp right now.</p>
+          <h1 className="text-3xl sm:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
+            {lang === 'sw' ? 'Maswali Yanayoulizwa Mara kwa Mara' : 'Frequently Asked Questions'}
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto">
+            {lang === 'sw'
+              ? 'Majibu ya haraka kuhusu usalama wa mizigo, vitu visivyoruhusiwa, malipo ya M-Pesa, na jinsi ya kuchukua mzigo wako.'
+              : 'Clear answers on security procedures, acceptable luggage, M-Pesa payments, and collection verification.'}
+          </p>
         </div>
-        <a
-          href="https://wa.me/254712345678"
-          target="_blank"
-          rel="noreferrer"
-          className="bg-[#25D366] hover:bg-[#20ba59] text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow shrink-0"
-        >
-          Chat with Support
-        </a>
+
+        {/* Search Input */}
+        <div className="relative max-w-xl mx-auto">
+          <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder={lang === 'sw' ? 'Tafuta swali lolote (M-Pesa, Laptop, Kuchelewa)...' : 'Search any question (e.g. M-Pesa, Laptop, Extension, Legal)...'}
+            className="w-full text-sm pl-12 pr-4 py-4 rounded-2xl border border-gray-200 bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 shadow-md transition-all font-medium"
+          />
+        </div>
+
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap justify-center gap-2 text-xs">
+          {[
+            { id: 'all', label: lang === 'sw' ? 'Yote' : 'All Questions' },
+            { id: 'items', label: lang === 'sw' ? 'Vitu Visivyoruhusiwa' : 'Prohibited Goods' },
+            { id: 'collection', label: lang === 'sw' ? 'Kuchukua Mzigo' : 'Collection & Receipts' },
+            { id: 'duration', label: lang === 'sw' ? 'Kuongeza Muda' : 'Extending Storage' },
+            { id: 'safety', label: lang === 'sw' ? 'Usalama wa Vifaa' : 'Safety & Electronics' },
+            { id: 'payment', label: lang === 'sw' ? 'Malipo ya M-Pesa' : 'Payments & Pricing' }
+          ].map((c) => (
+            <button
+              key={c.id}
+              onClick={() => setActiveCategory(c.id)}
+              className={`px-4 py-2 rounded-full font-bold transition-all ${
+                activeCategory === c.id
+                  ? 'bg-[#0B2545] text-white shadow-md'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Prohibited items warning callout */}
+        <div className="p-5 rounded-3xl bg-amber-50 border border-amber-200/90 text-xs sm:text-sm text-amber-950 flex items-start gap-3.5 shadow-xs">
+          <ShieldAlert className="w-5 h-5 text-[#FF6B4A] shrink-0 mt-0.5" />
+          <div className="leading-relaxed">
+            <strong className="block font-bold text-[#0B2545] mb-0.5">Strict Prohibited Goods Policy:</strong>
+            Perishables (raw meat, fresh seafood), petroleum solvents, gas cylinders, weapons, and narcotics are strictly forbidden on premises. Any violation will be handed over to the Kenya Police immediately.
+          </div>
+        </div>
+
+        {/* Accordion FAQ Items */}
+        <div className="space-y-3.5">
+          {filteredFaqs.length > 0 ? (
+            filteredFaqs.map((faq, idx) => {
+              const isExpanded = expandedFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`bg-white rounded-3xl border transition-all duration-300 overflow-hidden ${
+                    isExpanded
+                      ? 'border-[#13B5B1] shadow-lg ring-1 ring-[#13B5B1]/20'
+                      : 'border-gray-200 hover:border-gray-300 shadow-xs'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setExpandedFaq(isExpanded ? -1 : idx)}
+                    className="w-full text-left p-6 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-[#0B2545] hover:bg-gray-50/50 transition-colors"
+                  >
+                    <span className="font-['Syne'] font-bold">{lang === 'sw' ? faq.q_sw : faq.q_en}</span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform ${
+                      isExpanded ? 'bg-[#FF6B4A] text-white rotate-180' : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </button>
+                  {isExpanded && (
+                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 animate-in fade-in duration-200">
+                      {lang === 'sw' ? faq.a_sw : faq.a_en}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-center py-12 text-xs sm:text-sm text-gray-400">
+              No matching questions found for "{searchTerm}". Search another term or chat with our desk on WhatsApp below.
+            </div>
+          )}
+        </div>
+
+        {/* Still need help callout */}
+        <div className="bg-[#0B2545] rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-5 border border-white/10 shadow-xl">
+          <div className="space-y-1 text-center sm:text-left">
+            <h4 className="font-black text-lg font-['Syne']">Need assistance with your luggage right now?</h4>
+            <p className="text-xs sm:text-sm text-gray-300">Our Mombasa attendants are stationed at Moi Avenue and reply in minutes.</p>
+          </div>
+          <a
+            href="https://wa.me/254712345678"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg shrink-0 flex items-center gap-2"
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>Chat on WhatsApp</span>
+          </a>
+        </div>
+
       </div>
     </div>
   );

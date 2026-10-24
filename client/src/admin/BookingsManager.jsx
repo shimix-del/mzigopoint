@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import BookingDetailModal from './BookingDetailModal';
 
-export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey, onDataChanged }) {
+export default function BookingsManager({ token, user, isDarkMode, onOpenWalkIn, refreshKey, onDataChanged }) {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -98,12 +98,12 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
       'Qty',
       'Shelf',
       'Dropoff Date',
-      'Pickup Date',
-      'Status',
+      'Expected Pickup',
       'Total KES',
       'Paid KES',
       'Balance KES',
-      'Payment Status'
+      'Payment Status',
+      'Storage Status'
     ];
 
     const rows = sortedBookings.map(b => [
@@ -113,84 +113,85 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
       `"${b.item_type}"`,
       b.item_size,
       b.quantity,
-      b.shelf_location || 'N/A',
+      b.shelf_location || 'Unassigned',
       b.dropoff_date,
       b.expected_pickup_date,
-      b.status,
       b.total_amount,
       b.paid_amount,
       b.balance_amount,
-      b.payment_status
+      b.payment_status,
+      b.status
     ]);
 
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `mzingo_point_bookings_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `MzingoPoint_Bookings_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  // Status badge styling
   const renderStatusBadge = (status) => {
     switch (status) {
       case 'in_storage':
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-100 text-blue-800">In Storage</span>;
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-[#13B5B1]/20 text-[#13B5B1] border border-[#13B5B1]/30">In Storage</span>;
       case 'ready':
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-amber-800">Ready Pick-up</span>;
-      case 'collected':
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800">Collected</span>;
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-amber-400/20 text-amber-500 border border-amber-400/30">Ready</span>;
       case 'overdue':
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-rose-100 text-rose-700 animate-pulse">Overdue</span>;
-      case 'cancelled':
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-gray-200 text-gray-700">Cancelled</span>;
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-rose-500 text-white animate-pulse">Overdue</span>;
+      case 'collected':
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-500 border border-emerald-500/30">Collected</span>;
       default:
-        return <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-purple-100 text-purple-800">Booked</span>;
+        return <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-purple-500/20 text-purple-400 border border-purple-500/30">Booked</span>;
     }
   };
 
   const renderPaymentBadge = (status) => {
     switch (status) {
       case 'paid':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800">Paid</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-500">Paid</span>;
       case 'partial':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-800">Partial</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-amber-400/20 text-amber-500">Partial</span>;
       default:
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-100 text-rose-700">Pending</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-rose-500/20 text-rose-500">Pending</span>;
     }
   };
+
+  const cardBg = isDarkMode ? 'bg-[#0B2545] border-white/10 text-white' : 'bg-white border-gray-200 text-gray-900';
+  const tableHeaderBg = isDarkMode ? 'bg-[#071527] text-gray-400 border-white/10' : 'bg-gray-50/90 text-gray-500 border-gray-200';
+  const inputBg = isDarkMode ? 'bg-white/5 border-white/15 text-white' : 'bg-gray-50/60 border-gray-200 text-gray-900';
 
   return (
     <div className="space-y-4">
       {/* Search & Actions Header */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+      <div className={`rounded-3xl border p-6 shadow-sm space-y-4 transition-colors ${cardBg}`}>
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
           <div>
-            <h2 className="text-lg font-bold font-['Poppins'] text-[#0F2A4A]">
-              Bookings & Storage Inventory
+            <h2 className="text-xl font-black font-['Syne']">
+              Luggage Registry & Storage Inventory
             </h2>
-            <p className="text-xs text-gray-500">
-              Showing {sortedBookings.length} bookings • Search by name, phone, shelf, or reference
+            <p className="text-xs text-gray-400 mt-0.5">
+              Showing {sortedBookings.length} bookings • Search by customer, phone, bay, or reference
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={handleExportCSV}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3.5 py-2 rounded-xl font-bold flex items-center gap-1.5 transition-colors"
+              className="bg-white/10 hover:bg-white/20 text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/10"
               title="Download CSV"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5 text-[#13B5B1]" />
               <span>Export CSV</span>
             </button>
             <button
               onClick={onOpenWalkIn}
-              className="bg-[#E75A2D] hover:bg-[#d0451b] text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-xs transition-colors"
+              className="bg-[#FF6B4A] hover:bg-[#e85535] text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-1.5 shadow-md transition-all"
             >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>New Walk-in</span>
+              <PlusCircle className="w-4 h-4" />
+              <span>Walk-In Intake</span>
             </button>
           </div>
         </div>
@@ -199,13 +200,13 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2">
           {/* Search box */}
           <form onSubmit={handleSearchSubmit} className="lg:col-span-2 relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search ref, customer, phone, shelf..."
-              className="w-full text-xs pl-9 pr-3.5 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+              placeholder="Search reference, customer, phone, bay..."
+              className={`w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border focus:outline-none focus:border-[#13B5B1] ${inputBg}`}
             />
           </form>
 
@@ -214,7 +215,7 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full text-xs px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+              className={`w-full text-xs px-3.5 py-2.5 rounded-xl border focus:outline-none focus:border-[#13B5B1] ${inputBg}`}
             >
               <option value="all">All Storage Statuses</option>
               <option value="in_storage">In Storage</option>
@@ -230,7 +231,7 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
             <select
               value={paymentFilter}
               onChange={(e) => setPaymentFilter(e.target.value)}
-              className="w-full text-xs px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+              className={`w-full text-xs px-3.5 py-2.5 rounded-xl border focus:outline-none focus:border-[#13B5B1] ${inputBg}`}
             >
               <option value="all">All Payment Statuses</option>
               <option value="paid">Fully Paid</option>
@@ -240,12 +241,12 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
           </div>
 
           {/* Date range picker trigger */}
-          <div className="flex gap-1.5">
+          <div>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full text-xs px-2 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+              className={`w-full text-xs px-3 py-2.5 rounded-xl border focus:outline-none focus:border-[#13B5B1] ${inputBg}`}
               title="Start dropoff date"
             />
           </div>
@@ -253,52 +254,53 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
       </div>
 
       {/* BOOKINGS TABLE */}
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs">
+      <div className={`rounded-3xl border overflow-hidden shadow-sm transition-colors ${cardBg}`}>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-gray-50/80 border-b border-gray-200 text-gray-500 font-bold uppercase text-[10px] tracking-wider">
-                <th onClick={() => toggleSort('booking_ref')} className="p-3.5 cursor-pointer hover:text-black">
-                  <div className="flex items-center gap-1">
+              <tr className={`border-b font-mono font-bold uppercase text-[10px] tracking-wider ${tableHeaderBg}`}>
+                <th onClick={() => toggleSort('booking_ref')} className="p-4 cursor-pointer hover:text-white">
+                  <div className="flex items-center gap-1.5">
                     <span>Reference</span>
-                    <ArrowUpDown className="w-3 h-3" />
+                    <ArrowUpDown className="w-3 h-3 text-[#FF6B4A]" />
                   </div>
                 </th>
-                <th onClick={() => toggleSort('customer_name')} className="p-3.5 cursor-pointer hover:text-black">
-                  <div className="flex items-center gap-1">
+                <th onClick={() => toggleSort('customer_name')} className="p-4 cursor-pointer hover:text-white">
+                  <div className="flex items-center gap-1.5">
                     <span>Customer & Phone</span>
-                    <ArrowUpDown className="w-3 h-3" />
+                    <ArrowUpDown className="w-3 h-3 text-[#FF6B4A]" />
                   </div>
                 </th>
-                <th className="p-3.5">Items & Shelf</th>
-                <th onClick={() => toggleSort('dropoff_date')} className="p-3.5 cursor-pointer hover:text-black">
-                  <div className="flex items-center gap-1">
+                <th className="p-4">Items & Bay</th>
+                <th onClick={() => toggleSort('dropoff_date')} className="p-4 cursor-pointer hover:text-white">
+                  <div className="flex items-center gap-1.5">
                     <span>Drop-off / Due</span>
-                    <ArrowUpDown className="w-3 h-3" />
+                    <ArrowUpDown className="w-3 h-3 text-[#FF6B4A]" />
                   </div>
                 </th>
-                <th onClick={() => toggleSort('total_amount')} className="p-3.5 text-right cursor-pointer hover:text-black">
-                  <div className="flex items-center justify-end gap-1">
+                <th onClick={() => toggleSort('total_amount')} className="p-4 text-right cursor-pointer hover:text-white">
+                  <div className="flex items-center justify-end gap-1.5">
                     <span>Total (KES)</span>
-                    <ArrowUpDown className="w-3 h-3" />
+                    <ArrowUpDown className="w-3 h-3 text-[#FF6B4A]" />
                   </div>
                 </th>
-                <th className="p-3.5 text-right">Balance</th>
-                <th className="p-3.5 text-center">Payment</th>
-                <th className="p-3.5 text-center">Status</th>
-                <th className="p-3.5 text-center">Action</th>
+                <th className="p-4 text-right">Balance</th>
+                <th className="p-4 text-center">Payment</th>
+                <th className="p-4 text-center">Status</th>
+                <th className="p-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-white/5">
               {isLoading ? (
                 <tr>
-                  <td colSpan="9" className="p-8 text-center text-gray-400">
-                    Loading bookings...
+                  <td colSpan="9" className="p-10 text-center text-gray-400">
+                    <div className="w-6 h-6 border-2 border-[#FF6B4A] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                    <span>Loading bookings...</span>
                   </td>
                 </tr>
               ) : sortedBookings.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="p-8 text-center text-gray-400">
+                  <td colSpan="9" className="p-10 text-center text-gray-400">
                     No bookings found matching current filters.
                   </td>
                 </tr>
@@ -306,62 +308,62 @@ export default function BookingsManager({ token, user, onOpenWalkIn, refreshKey,
                 sortedBookings.map((b) => (
                   <tr
                     key={b.id}
-                    className="hover:bg-amber-50/40 transition-colors cursor-pointer group"
+                    className="hover:bg-[#13B5B1]/5 dark:hover:bg-white/5 transition-colors cursor-pointer group"
                     onClick={() => setSelectedBookingId(b.id)}
                   >
-                    <td className="p-3.5 font-bold font-mono text-[#0F2A4A]">
+                    <td className="p-4 font-mono font-bold text-[#FF6B4A]">
                       {b.booking_ref}
                     </td>
 
-                    <td className="p-3.5">
-                      <span className="font-bold text-gray-900 block">{b.customer_name}</span>
-                      <span className="text-[11px] text-gray-500 font-mono">{b.customer_phone}</span>
+                    <td className="p-4">
+                      <span className="font-bold block">{b.customer_name}</span>
+                      <span className="text-[11px] opacity-70 font-mono">{b.customer_phone}</span>
                     </td>
 
-                    <td className="p-3.5">
+                    <td className="p-4">
                       <div className="flex items-center gap-1.5">
                         <span className="font-semibold">{b.quantity}x {b.item_type}</span>
-                        <span className="text-[10px] text-gray-400 uppercase">({b.item_size})</span>
+                        <span className="text-[10px] font-mono opacity-60 uppercase">({b.item_size})</span>
                       </div>
-                      <div className="mt-0.5">
+                      <div className="mt-1">
                         {b.shelf_location ? (
-                          <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">
-                            {b.shelf_location}
+                          <span className="text-[10px] font-mono font-bold text-[#13B5B1] bg-[#13B5B1]/10 px-2 py-0.5 rounded-md">
+                            Bay {b.shelf_location}
                           </span>
                         ) : (
-                          <span className="text-[10px] text-gray-400 italic">No rack assigned</span>
+                          <span className="text-[10px] text-gray-400 italic">No bay assigned</span>
                         )}
-                        {b.is_fragile ? <span className="ml-1 text-[10px] text-rose-600 font-bold">⚠️ Fragile</span> : null}
+                        {b.is_fragile ? <span className="ml-1.5 text-[10px] text-[#FF6B4A] font-bold">⚠️ Fragile</span> : null}
                       </div>
                     </td>
 
-                    <td className="p-3.5">
-                      <div className="text-gray-600">{b.dropoff_date}</div>
-                      <div className="font-bold text-gray-900 mt-0.5">Due: {b.expected_pickup_date}</div>
+                    <td className="p-4">
+                      <div className="opacity-70 font-mono text-[11px]">{b.dropoff_date}</div>
+                      <div className="font-bold font-mono text-[11px] mt-0.5">Due: {b.expected_pickup_date}</div>
                     </td>
 
-                    <td className="p-3.5 text-right font-bold text-gray-900">
-                      {b.total_amount?.toLocaleString()}
+                    <td className="p-4 text-right font-black font-['Syne']">
+                      KES {b.total_amount?.toLocaleString()}
                     </td>
 
-                    <td className={`p-3.5 text-right font-bold ${
-                      b.balance_amount > 0 ? 'text-rose-600' : 'text-emerald-700'
+                    <td className={`p-4 text-right font-mono font-bold ${
+                      b.balance_amount > 0 ? 'text-rose-500' : 'text-emerald-500'
                     }`}>
-                      {b.balance_amount > 0 ? b.balance_amount?.toLocaleString() : 'KES 0'}
+                      {b.balance_amount > 0 ? `KES ${b.balance_amount?.toLocaleString()}` : 'KES 0'}
                     </td>
 
-                    <td className="p-3.5 text-center">
+                    <td className="p-4 text-center">
                       {renderPaymentBadge(b.payment_status)}
                     </td>
 
-                    <td className="p-3.5 text-center">
+                    <td className="p-4 text-center">
                       {renderStatusBadge(b.status)}
                     </td>
 
-                    <td className="p-3.5 text-center" onClick={(e) => e.stopPropagation()}>
+                    <td className="p-4 text-center" onClick={(e) => e.stopPropagation()}>
                       <button
                         onClick={() => setSelectedBookingId(b.id)}
-                        className="p-1.5 rounded-lg bg-gray-100 hover:bg-[#0F2A4A] text-gray-600 hover:text-white transition-colors"
+                        className="p-2 rounded-xl bg-gray-100 dark:bg-white/10 hover:bg-[#FF6B4A] text-gray-600 dark:text-gray-300 hover:text-white transition-all shadow-xs"
                         title="View Full Booking Details & Actions"
                       >
                         <Eye className="w-4 h-4" />
