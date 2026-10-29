@@ -117,10 +117,10 @@ export default function TrackBooking({ lang, setView }) {
 
   // Status mapping
   const statusSteps = [
-    { key: 'booked', label: '1. Booked Online', sub: 'Manifest Logged' },
-    { key: 'in_storage', label: '2. In Storage Bay', sub: 'Numbered Rack' },
-    { key: 'ready', label: '3. Ready for Pick-up', sub: 'At Counter' },
-    { key: 'collected', label: '4. Collected & Signed', sub: 'Journey Complete' }
+    { key: 'booked', label: '1. Booked', sub: 'Manifest Logged' },
+    { key: 'in_storage', label: '2. In Storage', sub: 'Numbered Rack' },
+    { key: 'ready', label: '3. Ready', sub: 'At Counter' },
+    { key: 'collected', label: '4. Collected', sub: 'Signed Release' }
   ];
 
   const getStatusIndex = (st) => {
@@ -133,20 +133,20 @@ export default function TrackBooking({ lang, setView }) {
   };
 
   return (
-    <div className="min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
-      <div className="max-w-4xl mx-auto space-y-10">
+    <div className="min-h-screen py-8 sm:py-16 px-3 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-10">
 
         {/* Page Title */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#13B5B1]/10 border border-[#13B5B1]/20 text-[#0B2545] text-xs font-bold uppercase tracking-widest">
+        <div className="text-center space-y-2 sm:space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#13B5B1]/10 border border-[#13B5B1]/20 text-[#0B2545] text-[10px] sm:text-xs font-bold uppercase tracking-widest">
             <Compass className="w-3.5 h-3.5 text-[#13B5B1]" />
-            <span>{lang === 'sw' ? 'Ufuatiliaji wa Mzigo • Mombasa' : 'Luggage Radar & Status • Mombasa Island'}</span>
+            <span>{lang === 'sw' ? 'Ufuatiliaji wa Mzigo • Mombasa' : 'Luggage Radar • Mombasa Island'}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
             {lang === 'sw' ? 'Fuatilia Mzigo Wako' : 'Track Luggage Status'}
           </h1>
-          <p className="text-xs sm:text-base text-gray-600 max-w-xl mx-auto">
+          <p className="text-xs sm:text-base text-gray-600 max-w-xl mx-auto px-2">
             {lang === 'sw'
               ? 'Weka namba ya kumbukumbu na simu kuona eneo la mzigo wako, salio, na kuongeza muda.'
               : 'Enter your booking reference and registered phone number to verify rack location, security lock, and pickup status.'}
@@ -154,11 +154,11 @@ export default function TrackBooking({ lang, setView }) {
         </div>
 
         {/* SEARCH CARD */}
-        <div className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl relative overflow-hidden">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200 p-4 sm:p-8 shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-36 h-36 bg-[#13B5B1]/5 rounded-bl-full pointer-events-none"></div>
 
-          <form onSubmit={handleTrack} className="space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <form onSubmit={handleTrack} className="space-y-4 sm:space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div className="space-y-1.5">
                 <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
                   {lang === 'sw' ? 'Namba ya Uhifadhi (Ref) *' : 'Booking Reference Number *'}
@@ -168,7 +168,7 @@ export default function TrackBooking({ lang, setView }) {
                   value={refInput}
                   onChange={(e) => setRefInput(e.target.value.toUpperCase())}
                   placeholder="e.g. MZP-2026-0001"
-                  className="w-full text-sm font-mono font-bold tracking-wider px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all uppercase"
+                  className="w-full text-base sm:text-sm font-mono font-bold tracking-wider px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all uppercase min-h-[44px]"
                   required
                 />
               </div>
@@ -182,13 +182,13 @@ export default function TrackBooking({ lang, setView }) {
                   value={phoneInput}
                   onChange={(e) => setPhoneInput(e.target.value)}
                   placeholder="e.g. 0719 234 567"
-                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium"
+                  className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium min-h-[44px]"
                   required
                 />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-1 sm:pt-2">
               <div className="text-xs text-gray-500 flex items-center gap-2">
                 <span>Demo quick-fill:</span>
                 <button
@@ -203,7 +203,7 @@ export default function TrackBooking({ lang, setView }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full sm:w-auto bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 min-h-[44px]"
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
@@ -221,7 +221,7 @@ export default function TrackBooking({ lang, setView }) {
           </form>
 
           {errorMsg && (
-            <div className="mt-5 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center gap-2.5">
+            <div className="mt-4 sm:mt-5 p-3.5 sm:p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center gap-2.5">
               <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -230,12 +230,12 @@ export default function TrackBooking({ lang, setView }) {
 
         {/* TRACKING RESULTS CARD */}
         {booking && (
-          <div className="bg-white rounded-3xl border border-gray-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-400">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-400">
             {/* Header Strip with Swahili flair */}
-            <div className="bg-[#0B2545] text-white p-6 sm:p-8 flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/10">
+            <div className="bg-[#0B2545] text-white p-4 sm:p-8 flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/10">
               <div className="space-y-1">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl sm:text-3xl font-black font-['Syne'] tracking-wider">
+                <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+                  <span className="text-xl sm:text-3xl font-black font-['Syne'] tracking-wider">
                     {booking.booking_ref}
                   </span>
                   <span className={`text-[10px] font-mono uppercase font-bold px-3 py-1 rounded-full ${
@@ -253,11 +253,11 @@ export default function TrackBooking({ lang, setView }) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <button
                   type="button"
                   onClick={() => setShowReceipt(true)}
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/15"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/15 min-h-[40px]"
                 >
                   <Printer className="w-4 h-4 text-[#13B5B1]" />
                   <span>Luggage Slip</span>
@@ -272,7 +272,7 @@ export default function TrackBooking({ lang, setView }) {
                       setNewDate(d.toISOString().split('T')[0]);
                       setExtendModalOpen(true);
                     }}
-                    className="bg-[#FF6B4A] hover:bg-[#e85535] text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow-md flex items-center gap-2 transition-all"
+                    className="bg-[#FF6B4A] hover:bg-[#e85535] text-white text-xs px-5 py-2.5 rounded-xl font-bold shadow-md flex items-center gap-2 transition-all min-h-[40px]"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Extend Storage</span>
@@ -283,7 +283,7 @@ export default function TrackBooking({ lang, setView }) {
 
             {/* OVERDUE WARNING IF APPLICABLE */}
             {booking.status === 'overdue' && (
-              <div className="bg-rose-50 border-b border-rose-200 p-4 sm:p-5 flex items-start gap-3.5 text-rose-900 text-xs sm:text-sm">
+              <div className="bg-rose-50 border-b border-rose-200 p-4 sm:p-5 flex items-start gap-3 text-rose-900 text-xs sm:text-sm">
                 <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-bold uppercase font-['Syne']">STORAGE OVERDUE ALERT</strong>
@@ -295,36 +295,36 @@ export default function TrackBooking({ lang, setView }) {
             )}
 
             {/* COASTAL ROUTE TIMELINE */}
-            <div className="p-6 sm:p-8 border-b border-gray-100 bg-[#FAF8F5]">
-              <div className="flex items-center justify-between mb-6">
+            <div className="p-4 sm:p-8 border-b border-gray-100 bg-[#FAF8F5]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-1">
                 <h3 className="text-xs font-mono font-bold uppercase tracking-widest text-[#0B2545]">
                   Luggage Custody Lifecycle
                 </h3>
-                <span className="text-[11px] text-gray-500 font-mono">Location: Moi Ave, Mombasa Island</span>
+                <span className="text-[11px] text-gray-500 font-mono">Moi Ave, Mombasa Island</span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 relative">
                 {statusSteps.map((step, idx) => {
                   const currentIdx = getStatusIndex(booking.status);
                   const isPassed = currentIdx >= idx;
                   const isCurrent = currentIdx === idx;
 
                   return (
-                    <div key={step.key} className="flex flex-col items-center text-center space-y-2 relative">
+                    <div key={step.key} className="flex flex-col items-center text-center space-y-1.5 relative">
                       <div
-                        className={`w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-xs shadow-sm transition-all ${
+                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center font-bold text-xs shadow-sm transition-all ${
                           isPassed
-                            ? 'bg-[#13B5B1] text-white ring-4 ring-[#13B5B1]/20'
+                            ? 'bg-[#13B5B1] text-white ring-2 sm:ring-4 ring-[#13B5B1]/20'
                             : isCurrent
-                            ? 'bg-[#FF6B4A] text-white ring-4 ring-[#FF6B4A]/20'
+                            ? 'bg-[#FF6B4A] text-white ring-2 sm:ring-4 ring-[#FF6B4A]/20'
                             : 'bg-white border border-gray-200 text-gray-400'
                         }`}
                       >
-                        {isPassed ? <CheckCircle className="w-5 h-5 text-white" /> : idx + 1}
+                        {isPassed ? <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" /> : idx + 1}
                       </div>
 
                       <div>
-                        <span className={`text-xs block font-bold ${
+                        <span className={`text-xs block font-bold truncate max-w-[120px] sm:max-w-none ${
                           isCurrent ? 'text-[#FF6B4A]' : isPassed ? 'text-[#0B2545]' : 'text-gray-400'
                         }`}>
                           {step.label}
@@ -340,12 +340,12 @@ export default function TrackBooking({ lang, setView }) {
             </div>
 
             {/* STORAGE METRICS GRID */}
-            <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200/80">
+            <div className="p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-gray-50 border border-gray-200/80">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-500 block mb-1">
                   Days in Custody
                 </span>
-                <div className="text-2xl font-black font-['Syne'] text-[#0B2545]">
+                <div className="text-xl sm:text-2xl font-black font-['Syne'] text-[#0B2545]">
                   {booking.days_stored_calculated || 1} day(s)
                 </div>
                 <p className="text-[11px] text-gray-500 mt-1">
@@ -353,11 +353,11 @@ export default function TrackBooking({ lang, setView }) {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#13B5B1]/10 border border-[#13B5B1]/30">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-[#13B5B1]/10 border border-[#13B5B1]/30">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0B2545] block mb-1">
                   Assigned Bay / Locker
                 </span>
-                <div className="text-2xl font-black font-['Syne'] text-[#0B2545]">
+                <div className="text-xl sm:text-2xl font-black font-['Syne'] text-[#0B2545]">
                   {booking.shelf_location || 'Bay #104'}
                 </div>
                 <p className="text-[11px] text-gray-600 mt-1 flex items-center gap-1">
@@ -366,11 +366,11 @@ export default function TrackBooking({ lang, setView }) {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-1">
                   Amount Paid
                 </span>
-                <div className="text-2xl font-black font-['Syne'] text-emerald-900">
+                <div className="text-xl sm:text-2xl font-black font-['Syne'] text-emerald-900">
                   KES {booking.paid_amount?.toLocaleString()}
                 </div>
                 <p className="text-[11px] text-emerald-700 mt-1 uppercase font-bold font-mono">
@@ -378,11 +378,11 @@ export default function TrackBooking({ lang, setView }) {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#FF6B4A]/10 border border-[#FF6B4A]/30">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FF6B4A]/10 border border-[#FF6B4A]/30">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FF6B4A] block mb-1">
                   Balance Due
                 </span>
-                <div className="text-2xl font-black font-['Syne'] text-[#0B2545]">
+                <div className="text-xl sm:text-2xl font-black font-['Syne'] text-[#0B2545]">
                   KES {booking.balance_amount?.toLocaleString()}
                 </div>
                 <p className="text-[11px] text-gray-500 mt-1">
@@ -392,9 +392,9 @@ export default function TrackBooking({ lang, setView }) {
             </div>
 
             {/* ITEM SUMMARY & QR SLIP FOOTER */}
-            <div className="p-6 sm:p-8 bg-gray-50/70 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="space-y-2 text-xs text-gray-700">
-                <div className="flex items-center gap-2">
+            <div className="p-4 sm:p-8 bg-gray-50/70 border-t border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+              <div className="space-y-2 text-xs text-gray-700 w-full md:w-auto">
+                <div className="flex items-center gap-2 flex-wrap">
                   <Luggage className="w-4 h-4 text-[#FF6B4A]" />
                   <strong className="text-sm font-bold text-[#0B2545]">
                     {booking.quantity}x {booking.item_type} ({booking.item_size})
@@ -419,11 +419,11 @@ export default function TrackBooking({ lang, setView }) {
               </div>
 
               {qrCodeUrl && (
-                <div className="text-center shrink-0 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm">
+                <div className="text-center shrink-0 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm mx-auto md:mx-0">
                   <img
                     src={qrCodeUrl}
                     alt="Luggage QR Tag"
-                    className="w-24 h-24 mx-auto rounded-lg"
+                    className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-lg"
                   />
                   <span className="text-[9px] font-mono text-gray-400 block mt-1">Official Claim Tag</span>
                 </div>
@@ -434,8 +434,8 @@ export default function TrackBooking({ lang, setView }) {
 
         {/* EXTEND STORAGE MODAL */}
         {extendModalOpen && (
-          <div className="fixed inset-0 z-50 bg-[#0B2545]/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-gray-100 space-y-5 animate-in zoom-in-95 duration-200">
+          <div className="fixed inset-0 z-50 bg-[#0B2545]/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+            <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-8 shadow-2xl border border-gray-100 space-y-4 sm:space-y-5 animate-in zoom-in-95 duration-200 my-4">
               <div className="flex justify-between items-center border-b border-gray-100 pb-3">
                 <div className="flex items-center gap-2 text-[#0B2545]">
                   <RefreshCw className="w-5 h-5 text-[#FF6B4A]" />
@@ -447,6 +447,7 @@ export default function TrackBooking({ lang, setView }) {
                   type="button"
                   onClick={() => setExtendModalOpen(false)}
                   className="p-1.5 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100"
+                  aria-label="Close extension modal"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -471,7 +472,7 @@ export default function TrackBooking({ lang, setView }) {
                       min={booking.expected_pickup_date}
                       value={newDate}
                       onChange={(e) => setNewDate(e.target.value)}
-                      className="w-full text-sm font-bold text-[#0B2545] px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20"
+                      className="w-full text-base sm:text-sm font-bold text-[#0B2545] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 min-h-[44px]"
                       required
                     />
                   </div>
@@ -480,18 +481,18 @@ export default function TrackBooking({ lang, setView }) {
                     💡 Payment difference can be cleared online with M-Pesa STK push or at the Moi Avenue counter during pick-up.
                   </div>
 
-                  <div className="flex justify-end gap-2.5 pt-2">
+                  <div className="flex flex-col sm:flex-row justify-end gap-2.5 pt-2">
                     <button
                       type="button"
                       onClick={() => setExtendModalOpen(false)}
-                      className="px-5 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50"
+                      className="w-full sm:w-auto px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 min-h-[44px]"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={isExtending}
-                      className="px-6 py-2.5 bg-[#FF6B4A] hover:bg-[#e85535] text-white rounded-xl font-bold shadow-md"
+                      className="w-full sm:w-auto px-6 py-3 bg-[#FF6B4A] hover:bg-[#e85535] text-white rounded-xl font-bold shadow-md min-h-[44px]"
                     >
                       {isExtending ? 'Updating...' : 'Confirm Extension'}
                     </button>

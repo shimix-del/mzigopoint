@@ -10,9 +10,9 @@ export default function TestimonialsSection({ lang }) {
       id: 1,
       name: "Kiprono Cheruiyot",
       route: "Eldoret ➔ Mombasa",
-      purpose: "Kenya Ports Authority (KPA) Interview",
+      purpose: "KPA Interview Candidate",
       avatar: "KC",
-      quote_en: "Arrived at 6 AM on a night bus from Eldoret for a crucial interview at KPA Headquarters. Storing my heavy suitcase at Mzingo Point on Moi Avenue allowed me to shower nearby, dress in my suit, and walk into the interview completely relaxed. Collected in the evening. Total lifesaver!",
+      quote_en: "Arrived at 6 AM on a night bus from Eldoret for an interview at KPA Headquarters. Storing my heavy suitcase at Mzingo Point on Moi Avenue allowed me to freshen up nearby and walk into the interview completely relaxed. Collected in the evening. Total lifesaver!",
       quote_sw: "Nilifika saa 12 asubuhi kutoka Eldoret kwa ajili ya mahojiano KPA. Kuacha sanduku langu Mzingo Point Moi Avenue kulinisaidia kwenda kwenye usaili nikiwa nadhifu na bila msongo wa mawazo. Nilirudi kuchukua jioni. Huduma bora kabisa!"
     },
     {
@@ -55,58 +55,58 @@ export default function TestimonialsSection({ lang }) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <div className="text-center space-y-3 max-w-2xl mx-auto">
         <span className="text-xs font-mono font-bold tracking-widest text-[#FF6B4A] uppercase bg-[#FF6B4A]/10 px-3.5 py-1 rounded-full">
           TRAVEL STORIES • SHUHUDA
         </span>
-        <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0B2545]">
+        <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-[#0B2545]">
           {lang === 'sw' ? 'Wateja Wetu Wanasemaje?' : 'Trusted Across the Swahili Coast'}
         </h2>
-        <p className="text-xs sm:text-sm text-gray-600">
+        <p className="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
           Hear from job applicants, holiday makers, students, and movers who entrusted their belongings to us.
         </p>
       </div>
 
       {/* Main Review Card */}
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl p-8 sm:p-12 border-2 border-amber-900/15 shadow-xl relative overflow-hidden">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl p-5 sm:p-8 lg:p-12 border-2 border-amber-900/15 shadow-xl relative overflow-hidden">
         {/* Giant decorative quotation mark */}
-        <div className="absolute top-4 right-6 text-amber-200/40 select-none pointer-events-none">
-          <Quote className="w-24 h-24 stroke-none fill-current" />
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-8 text-amber-200/40 select-none pointer-events-none">
+          <Quote className="w-16 h-16 sm:w-24 sm:h-24 stroke-none fill-current" />
         </div>
 
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 space-y-4 sm:space-y-6">
           <div className="flex items-center gap-1 text-amber-400">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-amber-400 stroke-none" />
+              <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 stroke-none" />
             ))}
           </div>
 
-          <p className="font-display text-lg sm:text-xl text-[#0B2545] leading-relaxed italic">
+          <p className="font-display text-base sm:text-xl text-[#0B2545] leading-relaxed italic">
             "{lang === 'sw' ? current.quote_sw : current.quote_en}"
           </p>
 
-          <div className="pt-6 border-t border-dashed border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+          <div className="pt-4 sm:pt-6 border-t border-dashed border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0B2545] to-[#13B5B1] text-white flex items-center justify-center font-display font-bold text-base shadow-sm">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-[#0B2545] to-[#13B5B1] text-white flex items-center justify-center font-display font-bold text-sm sm:text-base shadow-sm shrink-0">
                 {current.avatar}
               </div>
-              <div>
-                <strong className="block font-display font-bold text-base text-[#0B2545]">
+              <div className="min-w-0">
+                <strong className="block font-display font-bold text-sm sm:text-base text-[#0B2545] truncate">
                   {current.name}
                 </strong>
-                <span className="text-xs text-[#FF6B4A] font-mono font-bold">
+                <span className="text-[11px] text-[#FF6B4A] font-mono font-bold block truncate">
                   {current.purpose} • {current.route}
                 </span>
               </div>
             </div>
 
             {/* Prev / Next controls */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-end sm:self-auto">
               <button
                 type="button"
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-[#0B2545] hover:text-white text-gray-700 flex items-center justify-center transition-colors cursor-pointer"
+                className="w-11 h-11 rounded-2xl bg-gray-100 hover:bg-[#0B2545] hover:text-white active:scale-95 text-gray-700 flex items-center justify-center transition-all cursor-pointer min-h-[44px] min-w-[44px]"
                 aria-label="Previous Testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -114,7 +114,7 @@ export default function TestimonialsSection({ lang }) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-[#0B2545] hover:text-white text-gray-700 flex items-center justify-center transition-colors cursor-pointer"
+                className="w-11 h-11 rounded-2xl bg-gray-100 hover:bg-[#0B2545] hover:text-white active:scale-95 text-gray-700 flex items-center justify-center transition-all cursor-pointer min-h-[44px] min-w-[44px]"
                 aria-label="Next Testimonial"
               >
                 <ChevronRight className="w-5 h-5" />

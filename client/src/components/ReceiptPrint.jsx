@@ -9,25 +9,26 @@ export default function ReceiptPrint({ booking, qrCodeDataUrl, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden my-6 border border-gray-100 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden my-3 sm:my-6 border border-gray-100 flex flex-col max-h-[92vh]">
         {/* Modal Controls Header */}
-        <div className="bg-[#0F2A4A] text-white p-4 flex items-center justify-between no-print">
-          <div className="flex items-center gap-2">
-            <Printer className="w-5 h-5 text-amber-400" />
-            <h3 className="font-bold text-base">Print Receipt & Luggage Tag</h3>
+        <div className="bg-[#0B2545] text-white p-3.5 sm:p-4 flex items-center justify-between no-print shrink-0 gap-2">
+          <div className="flex items-center gap-2 truncate min-w-0">
+            <Printer className="w-4 h-4 text-[#13B5B1] shrink-0" />
+            <h3 className="font-bold text-xs sm:text-sm font-['Syne'] truncate">Print Receipt & Luggage Tag</h3>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handlePrint}
-              className="bg-[#E75A2D] hover:bg-[#d0451b] text-white text-xs px-3.5 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shadow"
+              className="bg-[#FF6B4A] hover:bg-[#e85535] text-white text-xs px-3 sm:px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow min-h-[36px]"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print Now</span>
+              <span>Print</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white/10"
+              className="p-1.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 min-h-[36px] min-w-[36px] flex items-center justify-center"
+              aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
@@ -35,152 +36,120 @@ export default function ReceiptPrint({ booking, qrCodeDataUrl, onClose }) {
         </div>
 
         {/* Printable Area */}
-        <div className="print-area p-6 bg-white font-mono text-gray-800 text-xs">
+        <div className="print-area p-4 sm:p-6 bg-white font-mono text-gray-800 text-xs overflow-y-auto">
           {/* 1. Official Receipt Section */}
-          <div className="border-2 border-dashed border-gray-400 p-5 rounded-xl mb-6 bg-amber-50/30">
+          <div className="border-2 border-dashed border-gray-400 p-4 sm:p-5 rounded-2xl mb-5 sm:mb-6 bg-amber-50/30">
             <div className="text-center pb-3 border-b border-gray-300 mb-3">
-              <h2 className="text-lg font-extrabold tracking-tight font-sans text-[#0F2A4A]">
+              <h2 className="text-base sm:text-lg font-black tracking-tight font-sans text-[#0B2545]">
                 MZINGO POINT STORAGE
               </h2>
-              <p className="text-[11px] text-gray-600 font-sans">
+              <p className="text-[10px] sm:text-[11px] text-gray-600 font-sans">
                 Moi Avenue, Opp. Mombasa Tusks, Mombasa, Kenya
               </p>
-              <p className="text-[11px] text-gray-600 font-sans">
+              <p className="text-[10px] sm:text-[11px] text-gray-600 font-sans">
                 Tel / WhatsApp: +254 712 345 678 • info@mzingopoint.co.ke
               </p>
-              <p className="text-[10px] text-gray-500 font-sans mt-0.5">
+              <p className="text-[9px] sm:text-[10px] text-gray-500 font-sans mt-0.5">
                 Reg: PVT-MZP2026 • Kenya Data Protection Act Compliant
               </p>
             </div>
 
-            <div className="flex justify-between items-start mb-3 pb-2 border-b border-gray-200">
+            <div className="flex flex-col sm:flex-row justify-between items-start mb-3 pb-2 border-b border-gray-200 gap-2">
               <div>
-                <p><span className="text-gray-500">Booking Ref:</span> <strong className="text-sm font-sans text-[#0F2A4A]">{booking.booking_ref}</strong></p>
+                <p><span className="text-gray-500">Booking Ref:</span> <strong className="text-sm font-sans text-[#0B2545]">{booking.booking_ref}</strong></p>
                 <p><span className="text-gray-500">Customer:</span> <strong>{booking.customer_name || 'Walk-in Mteja'}</strong></p>
                 <p><span className="text-gray-500">Phone:</span> {booking.customer_phone}</p>
-                <p><span className="text-gray-500">ID / Passport:</span> {booking.customer_id_number || 'Verified on Counter'}</p>
+                <p><span className="text-gray-500">National ID / Passport:</span> {booking.customer_id_number || 'Verified'}</p>
               </div>
-              <div className="text-right">
+              <div className="sm:text-right">
                 <p><span className="text-gray-500">Drop-off:</span> {booking.dropoff_date}</p>
-                <p><span className="text-gray-500">Pick-up:</span> <strong>{booking.expected_pickup_date}</strong></p>
-                <p><span className="text-gray-500">Rack / Shelf:</span> <strong className="text-amber-700 bg-amber-100 px-1 rounded">{booking.shelf_location || 'Receiving Bay'}</strong></p>
+                <p><span className="text-gray-500">Expected Pick-up:</span> <strong className="text-rose-700">{booking.expected_pickup_date}</strong></p>
+                <p><span className="text-gray-500">Storage Rack Bay:</span> <strong className="text-[#FF6B4A]">{booking.shelf_location || 'Receiving Bay'}</strong></p>
               </div>
             </div>
 
-            {/* Items details */}
-            <div className="mb-4">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-gray-300 text-gray-600 font-semibold">
-                    <th className="py-1">Item Description</th>
-                    <th className="py-1">Size</th>
-                    <th className="py-1 text-center">Qty</th>
-                    <th className="py-1 text-right">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-gray-200">
-                    <td className="py-1.5 font-sans">
-                      {booking.item_type}
-                      {booking.is_fragile ? ' ⚠️ [FRAGILE]' : ''}
-                      {booking.description && <span className="block text-[10px] text-gray-500 italic">{booking.description}</span>}
-                    </td>
-                    <td className="py-1.5 uppercase font-sans text-[11px]">{booking.item_size}</td>
-                    <td className="py-1.5 text-center font-sans">{booking.quantity}</td>
-                    <td className="py-1.5 text-right font-sans">KES {booking.total_amount?.toLocaleString()}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {/* Itemized Table */}
+            <table className="w-full text-left mb-3">
+              <thead>
+                <tr className="border-b border-gray-300 text-[10px] text-gray-500 uppercase">
+                  <th className="py-1">Description</th>
+                  <th className="py-1 text-center">Qty</th>
+                  <th className="py-1 text-center">Size</th>
+                  <th className="py-1 text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 text-xs">
+                <tr>
+                  <td className="py-1.5">
+                    <strong>{booking.item_type}</strong>
+                    {booking.description && <span className="block text-[10px] text-gray-500">"{booking.description}"</span>}
+                    {booking.is_fragile ? <span className="text-[9px] text-rose-600 font-bold">⚠️ FRAGILE HANDLING</span> : null}
+                  </td>
+                  <td className="py-1.5 text-center">{booking.quantity}</td>
+                  <td className="py-1.5 text-center uppercase">{booking.item_size}</td>
+                  <td className="py-1.5 text-right font-bold">KES {booking.total_amount?.toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
 
             {/* Financial Summary */}
-            <div className="border-t border-gray-300 pt-2 space-y-1 text-right font-sans">
+            <div className="border-t-2 border-gray-400 pt-2 space-y-1 text-xs">
               <div className="flex justify-between">
-                <span className="text-gray-600">Storage Total:</span>
-                <span className="font-semibold">KES {booking.total_amount?.toLocaleString()}</span>
+                <span>Total Storage Fee:</span>
+                <strong className="text-[#0B2545]">KES {booking.total_amount?.toLocaleString()}</strong>
               </div>
-              {booking.late_fee > 0 && (
-                <div className="flex justify-between text-rose-600">
-                  <span>Late Fee Applied:</span>
-                  <span className="font-semibold">+ KES {booking.late_fee?.toLocaleString()}</span>
-                </div>
-              )}
               <div className="flex justify-between text-emerald-700">
                 <span>Amount Paid:</span>
-                <span className="font-semibold">KES {booking.paid_amount?.toLocaleString()}</span>
+                <strong>KES {booking.paid_amount?.toLocaleString()} ({booking.payment_status?.toUpperCase()})</strong>
               </div>
-              <div className="flex justify-between text-sm font-bold border-t border-gray-300 pt-1 text-[#0F2A4A]">
-                <span>Balance Due on Collection:</span>
-                <span className={booking.balance_amount > 0 ? 'text-rose-600' : 'text-emerald-700'}>
-                  KES {booking.balance_amount?.toLocaleString()}
-                </span>
+              <div className="flex justify-between text-rose-700 font-bold border-t border-gray-200 pt-1">
+                <span>Balance Due at Collection:</span>
+                <strong>KES {booking.balance_amount > 0 ? booking.balance_amount?.toLocaleString() : '0 (CLEARED)'}</strong>
               </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-dashed border-gray-300 text-[10px] text-gray-500 leading-snug">
-              <p>• Retain this receipt. Present original ID/Passport and reference when picking up.</p>
-              <p>• Late fee: KES 100/day per item applied after {booking.expected_pickup_date}.</p>
-              <p>• Unclaimed items policy: Handled under Kenya Disposal of Uncollected Goods Act after 30 days.</p>
             </div>
           </div>
 
-          {/* 2. Tear-off Luggage Tag Section */}
-          <div className="border-2 border-black p-4 rounded-xl bg-white relative">
-            <div className="text-[10px] font-sans font-bold text-gray-500 uppercase tracking-wider mb-1 flex items-center justify-between">
-              <span>✂️ TEAR-OFF ITEM LUGGAGE TAG (ATTACH TO BAG HANDLE)</span>
-              <span>MZINGO POINT MOMBASA</span>
+          {/* 2. Tear-off Luggage Tag Strip */}
+          <div className="border-2 border-[#0B2545] p-4 sm:p-5 rounded-2xl bg-white space-y-3">
+            <div className="flex items-center justify-between border-b pb-2">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-gray-500">
+                Official Baggage Claim Tag • Mzingo Point
+              </span>
+              <span className="bg-[#FF6B4A] text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">
+                Attach to Bag
+              </span>
             </div>
 
             <div className="flex items-center justify-between gap-4">
-              <div className="space-y-1 flex-1 font-sans">
-                <div className="text-xl font-black text-[#0F2A4A] tracking-wider">
+              <div className="space-y-1">
+                <span className="text-[10px] text-gray-400 uppercase block">Ref Code:</span>
+                <span className="text-xl sm:text-2xl font-black font-sans text-[#0B2545] tracking-widest">
                   {booking.booking_ref}
-                </div>
-                <div className="text-sm font-bold text-amber-800 bg-amber-100 inline-block px-2 py-0.5 rounded">
-                  SHELF: {booking.shelf_location || 'UNASSIGNED'}
-                </div>
+                </span>
                 <p className="text-xs">
-                  <strong>{booking.customer_name}</strong> • {booking.customer_phone}
+                  Bay Location: <strong className="text-base text-[#FF6B4A] font-sans">{booking.shelf_location || 'Receiving Bay'}</strong>
                 </p>
-                <p className="text-xs text-gray-600">
-                  {booking.quantity}x {booking.item_type} ({booking.item_size})
-                  {booking.is_fragile ? ' • ⚠️ FRAGILE' : ''}
-                </p>
-                <p className="text-[11px] text-gray-500">
-                  Drop-off: {booking.dropoff_date} | Due: <strong>{booking.expected_pickup_date}</strong>
+                <p className="text-[11px] text-gray-600">
+                  Customer: <strong>{booking.customer_name}</strong>
                 </p>
               </div>
 
-              {/* QR Code */}
-              {qrCodeDataUrl ? (
+              {qrCodeDataUrl && (
                 <div className="text-center shrink-0">
-                  <img src={qrCodeDataUrl} alt="Luggage QR Code" className="w-24 h-24 border border-gray-300 p-1 rounded" />
-                  <span className="text-[9px] text-gray-500 block mt-0.5">Scan to verify</span>
-                </div>
-              ) : (
-                <div className="w-24 h-24 border border-dashed border-gray-300 flex items-center justify-center text-[10px] text-gray-400">
-                  QR Tag
+                  <img
+                    src={qrCodeDataUrl}
+                    alt="Booking QR Code"
+                    className="w-20 h-20 sm:w-24 sm:h-24 p-1 border border-gray-300 rounded-xl"
+                  />
+                  <span className="text-[9px] text-gray-400 block mt-0.5">Scan to verify</span>
                 </div>
               )}
             </div>
-          </div>
-        </div>
 
-        {/* Modal footer controls */}
-        <div className="bg-gray-50 p-4 border-t border-gray-200 flex justify-end gap-3 no-print">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 border border-gray-300 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100"
-          >
-            Close Preview
-          </button>
-          <button
-            onClick={handlePrint}
-            className="px-5 py-2 bg-[#E75A2D] hover:bg-[#d0451b] text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5"
-          >
-            <Printer className="w-4 h-4" />
-            <span>Print Receipt & Tag</span>
-          </button>
+            <div className="text-[9px] text-gray-500 border-t pt-2 leading-snug">
+              Notice: Items uncollected after the agreed pickup date attract a late holding fee of KES 100/day. Presented National ID must match the booking record for luggage release.
+            </div>
+          </div>
         </div>
       </div>
     </div>

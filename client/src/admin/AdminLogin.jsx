@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Mail, Key, ShieldCheck, ArrowRight, UserCheck, AlertCircle } from 'lucide-react';
+import { Lock, Mail, Key, ShieldCheck, ArrowRight, UserCheck, AlertCircle, ArrowLeft } from 'lucide-react';
 
 export default function AdminLogin({ onLoginSuccess, onCancel }) {
   const [identifier, setIdentifier] = useState('');
@@ -37,7 +37,6 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
   const handleDemoLogin = (email, pwd) => {
     setIdentifier(email);
     setPassword(pwd);
-    // trigger login automatically
     setIsLoading(true);
     fetch('/api/auth/login', {
       method: 'POST',
@@ -59,30 +58,30 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="bg-white rounded-3xl max-w-md w-full p-8 sm:p-10 border border-gray-200 shadow-2xl space-y-6">
+    <div className="min-h-[80vh] flex items-center justify-center px-3 sm:px-6 py-8 sm:py-16">
+      <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-10 border border-gray-200 shadow-2xl space-y-5 sm:space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-[#0F2A4A] text-white flex items-center justify-center mx-auto shadow-md">
-            <Lock className="w-6 h-6 text-amber-400" />
+          <div className="w-12 h-12 rounded-2xl bg-[#0B2545] text-white flex items-center justify-center mx-auto shadow-md">
+            <Lock className="w-6 h-6 text-[#FF6B4A]" />
           </div>
-          <h2 className="text-2xl font-bold font-['Poppins'] text-[#0F2A4A]">
-            Staff & Owner Portal
+          <h2 className="text-xl sm:text-2xl font-black font-['Syne'] text-[#0B2545]">
+            Moi Avenue Desk Portal
           </h2>
-          <p className="text-xs text-gray-500">
-            Sign in to manage luggage check-in, verify pickups, view revenue & assign racks.
+          <p className="text-xs text-gray-500 max-w-xs mx-auto">
+            Authorized owner and staff login for intake, pickups, and live bay verification.
           </p>
         </div>
 
         {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
               Email or Phone
             </label>
             <div className="relative">
@@ -92,14 +91,14 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
                 required
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="e.g. owner@mzingopoint.co.ke"
-                className="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+                placeholder="e.g. owner@mzingo.co.ke"
+                className="w-full text-base sm:text-xs pl-10 pr-3.5 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 min-h-[44px]"
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
               Password
             </label>
             <div className="relative">
@@ -109,8 +108,8 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#E75A2D]"
+                placeholder="Enter password"
+                className="w-full text-base sm:text-xs pl-10 pr-3.5 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 min-h-[44px]"
               />
             </div>
           </div>
@@ -118,50 +117,52 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#0F2A4A] hover:bg-[#1a406c] text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-[#0B2545] hover:bg-[#163a63] text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all min-h-[44px] cursor-pointer"
           >
-            {isLoading ? <span>Signing in...</span> : <span>Sign In to Dashboard</span>}
+            {isLoading ? (
+              <span>Authenticating...</span>
+            ) : (
+              <>
+                <span>Sign In to Desk</span>
+                <ArrowRight className="w-4 h-4 text-[#13B5B1]" />
+              </>
+            )}
           </button>
         </form>
 
-        {/* Quick Demo Login Buttons */}
-        <div className="pt-4 border-t border-gray-200 space-y-2.5">
-          <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block text-center">
-            ⚡ Quick Demo Accounts
+        {/* Quick Demo Logins */}
+        <div className="pt-4 border-t border-gray-100 space-y-2">
+          <span className="text-[10px] uppercase font-mono font-bold text-gray-400 block text-center">
+            Demo Quick Login Credentials
           </span>
-
-          <button
-            type="button"
-            onClick={() => handleDemoLogin('owner@mzingopoint.co.ke', 'admin123')}
-            className="w-full p-2.5 rounded-xl border border-amber-300 bg-amber-50/60 hover:bg-amber-100/80 text-left transition-colors flex items-center justify-between"
-          >
-            <div>
-              <strong className="text-xs text-[#0F2A4A] block">Login as Owner (Ali Mwamburi)</strong>
-              <span className="text-[10px] text-gray-500">Full Access: Revenue, Prices, Reports & Staff</span>
-            </div>
-            <span className="text-xs font-bold text-amber-700 bg-amber-200 px-2 py-0.5 rounded">Owner</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleDemoLogin('attendant@mzingopoint.co.ke', 'staff123')}
-            className="w-full p-2.5 rounded-xl border border-blue-200 bg-blue-50/60 hover:bg-blue-100/80 text-left transition-colors flex items-center justify-between"
-          >
-            <div>
-              <strong className="text-xs text-[#0F2A4A] block">Login as Staff Attendant (Fatuma Juma)</strong>
-              <span className="text-[10px] text-gray-500">Check-in, Shelf assignment, Payments, Collections</span>
-            </div>
-            <span className="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-0.5 rounded">Staff</span>
-          </button>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('owner@mzingo.co.ke', 'mzingo2026')}
+              className="p-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[#0B2545] text-left transition-colors min-h-[44px]"
+            >
+              <strong className="block text-[11px] font-bold">👑 Business Owner</strong>
+              <span className="text-[10px] text-gray-500 font-mono">Full Access + Revenue</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('staff@mzingo.co.ke', 'staff2026')}
+              className="p-2 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-[#0B2545] text-left transition-colors min-h-[44px]"
+            >
+              <strong className="block text-[11px] font-bold">🛡️ Desk Staff</strong>
+              <span className="text-[10px] text-gray-500 font-mono">Intake & Pickups</span>
+            </button>
+          </div>
         </div>
 
         <div className="text-center pt-2">
           <button
             type="button"
             onClick={onCancel}
-            className="text-xs text-gray-500 hover:text-gray-800 underline"
+            className="text-xs text-gray-500 hover:text-black font-semibold flex items-center justify-center gap-1 mx-auto py-2"
           >
-            Back to Public Website
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Return to Public Website</span>
           </button>
         </div>
       </div>

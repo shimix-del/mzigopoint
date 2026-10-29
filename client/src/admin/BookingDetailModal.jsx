@@ -254,12 +254,12 @@ export default function BookingDetailModal({ bookingId, token, user, onClose, on
   const { booking, payments, auditLogs, qrCodeDataUrl } = data;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-gray-100 my-6 flex flex-col max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full shadow-2xl border border-gray-100 my-2 sm:my-6 flex flex-col max-h-[94vh] sm:max-h-[90vh] overflow-hidden">
         {/* Top Header */}
-        <div className="bg-[#0F2A4A] text-white p-5 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-bold font-mono tracking-wider text-amber-400">
+        <div className="bg-[#0F2A4A] text-white p-4 sm:p-5 flex flex-col sm:flex-row justify-between sm:items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+            <span className="text-lg sm:text-xl font-bold font-mono tracking-wider text-amber-400">
               {booking.booking_ref}
             </span>
             <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-white/20">
@@ -267,17 +267,18 @@ export default function BookingDetailModal({ bookingId, token, user, onClose, on
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-end sm:self-auto">
             <button
               onClick={() => setReceiptOpen(true)}
-              className="bg-white/10 hover:bg-white/20 text-white text-xs px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5"
+              className="bg-white/10 hover:bg-white/20 text-white text-xs px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 min-h-[36px]"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print Tag & Receipt</span>
+              <span>Print Slip</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/10"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 min-h-[36px] min-w-[36px] flex items-center justify-center"
+              aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
@@ -285,54 +286,54 @@ export default function BookingDetailModal({ bookingId, token, user, onClose, on
         </div>
 
         {/* Tab switcher */}
-        <div className="bg-gray-50 border-b border-gray-200 px-6 py-2 flex items-center justify-between text-xs shrink-0">
-          <div className="flex gap-4">
+        <div className="bg-gray-50 border-b border-gray-200 px-4 sm:px-6 py-2 flex flex-col sm:flex-row sm:items-center justify-between text-xs shrink-0 gap-2 overflow-x-auto">
+          <div className="flex gap-4 shrink-0">
             <button
               onClick={() => setActiveTab('details')}
-              className={`pb-2 font-bold transition-colors ${
-                activeTab === 'details' ? 'border-b-2 border-[#E75A2D] text-[#0F2A4A]' : 'text-gray-500'
+              className={`pb-1.5 font-bold transition-colors min-h-[36px] flex items-center ${
+                activeTab === 'details' ? 'border-b-2 border-[#FF6B4A] text-[#0F2A4A]' : 'text-gray-500'
               }`}
             >
               Storage & Customer
             </button>
             <button
               onClick={() => setActiveTab('payments')}
-              className={`pb-2 font-bold transition-colors ${
-                activeTab === 'payments' ? 'border-b-2 border-[#E75A2D] text-[#0F2A4A]' : 'text-gray-500'
+              className={`pb-1.5 font-bold transition-colors min-h-[36px] flex items-center ${
+                activeTab === 'payments' ? 'border-b-2 border-[#FF6B4A] text-[#0F2A4A]' : 'text-gray-500'
               }`}
             >
               Payments ({payments.length})
             </button>
             <button
               onClick={() => setActiveTab('timeline')}
-              className={`pb-2 font-bold transition-colors ${
-                activeTab === 'timeline' ? 'border-b-2 border-[#E75A2D] text-[#0F2A4A]' : 'text-gray-500'
+              className={`pb-1.5 font-bold transition-colors min-h-[36px] flex items-center ${
+                activeTab === 'timeline' ? 'border-b-2 border-[#FF6B4A] text-[#0F2A4A]' : 'text-gray-500'
               }`}
             >
-              Audit Trail ({auditLogs.length})
+              Audit ({auditLogs.length})
             </button>
           </div>
 
           {/* WhatsApp Direct Action */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-gray-500 hidden sm:inline">Send WhatsApp:</span>
+          <div className="flex items-center gap-1.5 shrink-0 overflow-x-auto pb-1 sm:pb-0">
+            <span className="text-[10px] text-gray-500 hidden md:inline">WhatsApp:</span>
             <button
               onClick={() => handleSendNotification('confirmation')}
-              className="text-[10px] bg-[#25D366] text-white font-bold px-2 py-1 rounded hover:bg-[#20ba59]"
+              className="text-[10px] bg-[#25D366] text-white font-bold px-2 py-1 rounded hover:bg-[#20ba59] min-h-[28px]"
               title="Send Confirmation"
             >
               Confirm
             </button>
             <button
               onClick={() => handleSendNotification('reminder_due')}
-              className="text-[10px] bg-amber-500 text-white font-bold px-2 py-1 rounded hover:bg-amber-600"
+              className="text-[10px] bg-amber-500 text-white font-bold px-2 py-1 rounded hover:bg-amber-600 min-h-[28px]"
               title="Send Due Reminder"
             >
               Due Today
             </button>
             <button
               onClick={() => handleSendNotification('overdue_alert')}
-              className="text-[10px] bg-rose-600 text-white font-bold px-2 py-1 rounded hover:bg-rose-700"
+              className="text-[10px] bg-rose-600 text-white font-bold px-2 py-1 rounded hover:bg-rose-700 min-h-[28px]"
               title="Send Overdue Notice"
             >
               Overdue
@@ -341,7 +342,7 @@ export default function BookingDetailModal({ bookingId, token, user, onClose, on
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-xs text-gray-700">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 sm:space-y-6 flex-1 text-xs text-gray-700">
           {/* TAB 1: DETAILS */}
           {activeTab === 'details' && (
             <div className="space-y-6">

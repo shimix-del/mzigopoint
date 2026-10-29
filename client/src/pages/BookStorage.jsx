@@ -163,7 +163,7 @@ export default function BookStorage({ lang, setView, prefill }) {
       if (err) { setErrorMsg(err); return; }
     }
     setCurrentStep(prev => prev + 1);
-    window.scrollTo({ top: 120, behavior: 'smooth' });
+    window.scrollTo({ top: 100, behavior: 'smooth' });
   };
 
   // Submit Booking handler
@@ -234,7 +234,7 @@ export default function BookStorage({ lang, setView, prefill }) {
       } catch (err) {}
 
       setCurrentStep(5);
-      window.scrollTo({ top: 80, behavior: 'smooth' });
+      window.scrollTo({ top: 60, behavior: 'smooth' });
     } catch (err) {
       setErrorMsg(err.message || 'An error occurred while booking. Please try again.');
     } finally {
@@ -244,41 +244,41 @@ export default function BookStorage({ lang, setView, prefill }) {
 
   const steps = [
     { num: 1, label: lang === 'sw' ? 'Mteja' : 'Customer', sub: 'ID & Phone' },
-    { num: 2, label: lang === 'sw' ? 'Mzigo' : 'Luggage', sub: 'Size & Details' },
+    { num: 2, label: lang === 'sw' ? 'Mzigo' : 'Luggage', sub: 'Size & Type' },
     { num: 3, label: lang === 'sw' ? 'Tarehe' : 'Dates', sub: 'Drop & Pick' },
-    { num: 4, label: lang === 'sw' ? 'Malipo' : 'Payment', sub: 'M-Pesa / Counter' },
+    { num: 4, label: lang === 'sw' ? 'Malipo' : 'Payment', sub: 'M-Pesa / Cash' },
     { num: 5, label: lang === 'sw' ? 'Tiketi' : 'Manifest', sub: 'QR Tag' }
   ];
 
   return (
-    <div className="min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
+    <div className="min-h-screen py-8 sm:py-16 px-3 sm:px-6 lg:px-8 relative bg-gradient-to-b from-[#F6EBD9]/40 via-white to-[#F6EBD9]/20">
       <div className="max-w-4xl mx-auto">
 
         {/* Header / Boarding Pass Title */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF6B4A]/10 border border-[#FF6B4A]/20 text-[#FF6B4A] text-xs font-bold uppercase tracking-widest mb-3">
+        <div className="text-center mb-6 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FF6B4A]/10 border border-[#FF6B4A]/20 text-[#FF6B4A] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3">
             <Tag className="w-3.5 h-3.5" />
-            <span>{lang === 'sw' ? 'Manifesti ya Uhifadhi • Mombasa' : 'Luggage Storage Manifest • Mombasa Island'}</span>
+            <span>{lang === 'sw' ? 'Manifesti ya Uhifadhi • Mombasa' : 'Luggage Manifest • Mombasa Island'}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black font-['Syne',sans-serif] text-[#0B2545] tracking-tight">
             {lang === 'sw' ? 'Hifadhi Mzigo Wako' : 'Book Your Storage Bay'}
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto mt-2">
+          <p className="text-xs sm:text-base text-gray-600 max-w-xl mx-auto mt-1 sm:mt-2 px-2">
             {lang === 'sw'
               ? 'Weka nafasi kwa hatua rahisi. Mzigo wako hufungiwa na kuangaliwa 24/7 Moi Avenue.'
               : 'Issue your luggage tag in minutes. CCTV secured, lockable units on Moi Avenue.'}
           </p>
         </div>
 
-        {/* STEPPER PROGRESS */}
-        <div className="mb-10">
-          <div className="bg-white/90 backdrop-blur-md rounded-3xl p-4 sm:p-6 border border-gray-200/80 shadow-sm">
+        {/* STEPPER PROGRESS BAR */}
+        <div className="mb-6 sm:mb-10">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-3 sm:p-6 border border-gray-200/80 shadow-sm">
             <div className="flex items-center justify-between relative">
               {/* Connector line */}
-              <div className="absolute left-6 right-6 top-5 h-0.5 bg-gray-200 -z-0"></div>
+              <div className="absolute left-4 right-4 sm:left-6 sm:right-6 top-4 sm:top-5 h-0.5 bg-gray-200 -z-0"></div>
               <div
-                className="absolute left-6 top-5 h-0.5 bg-gradient-to-r from-[#FF6B4A] to-[#13B5B1] transition-all duration-500 -z-0"
+                className="absolute left-4 sm:left-6 top-4 sm:top-5 h-0.5 bg-gradient-to-r from-[#FF6B4A] to-[#13B5B1] transition-all duration-500 -z-0"
                 style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
               ></div>
 
@@ -286,22 +286,23 @@ export default function BookStorage({ lang, setView, prefill }) {
                 const isPassed = currentStep > s.num;
                 const isCurrent = currentStep === s.num;
                 return (
-                  <div key={s.num} className="flex flex-col items-center z-10 flex-1">
+                  <div key={s.num} className="flex flex-col items-center z-10 flex-1 min-w-0">
                     <button
                       type="button"
                       disabled={s.num > currentStep}
                       onClick={() => s.num < currentStep && setCurrentStep(s.num)}
-                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 ${
+                      className={`w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 ${
                         isPassed
                           ? 'bg-[#13B5B1] text-white shadow-md'
                           : isCurrent
-                          ? 'bg-[#FF6B4A] text-white ring-4 ring-[#FF6B4A]/25 shadow-lg scale-110'
-                          : 'bg-white text-gray-400 border border-gray-200 hover:border-gray-300'
+                          ? 'bg-[#FF6B4A] text-white ring-2 sm:ring-4 ring-[#FF6B4A]/25 shadow-lg'
+                          : 'bg-white text-gray-400 border border-gray-200'
                       }`}
+                      aria-label={`Step ${s.num}: ${s.label}`}
                     >
-                      {isPassed ? <CheckCircle className="w-5 h-5 text-white" /> : s.num}
+                      {isPassed ? <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" /> : s.num}
                     </button>
-                    <span className={`text-[11px] sm:text-xs mt-2 font-bold transition-colors ${
+                    <span className={`text-[10px] sm:text-xs mt-1.5 sm:mt-2 font-bold transition-colors truncate max-w-[60px] sm:max-w-none text-center ${
                       isCurrent ? 'text-[#FF6B4A]' : isPassed ? 'text-[#0B2545]' : 'text-gray-400'
                     }`}>
                       {s.label}
@@ -318,47 +319,47 @@ export default function BookStorage({ lang, setView, prefill }) {
 
         {/* ERROR MESSAGE */}
         {errorMsg && (
-          <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center gap-3 shadow-xs">
+          <div className="mb-6 p-3.5 sm:p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-center gap-3 shadow-xs">
             <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />
             <span className="font-medium">{errorMsg}</span>
           </div>
         )}
 
         {/* MAIN BOARDING PASS CARD CONTAINER */}
-        <div className="bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden relative">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-xl overflow-hidden relative">
           {/* Top Boarding Pass Header Strip */}
-          <div className="bg-[#0B2545] text-white px-6 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-[#13B5B1]">
-                <DhowIcon className="w-5 h-5" />
+          <div className="bg-[#0B2545] text-white px-4 sm:px-8 py-3.5 sm:py-4 flex flex-wrap items-center justify-between gap-2 border-b border-white/10">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 flex items-center justify-center text-[#13B5B1] shrink-0">
+                <DhowIcon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <span className="text-[10px] text-amber-300 font-mono tracking-widest uppercase block">
+              <div className="truncate">
+                <span className="text-[9px] sm:text-[10px] text-amber-300 font-mono tracking-widest uppercase block">
                   MZINGO MANIFEST № 2026-MSA
                 </span>
-                <span className="text-sm font-black font-['Syne'] tracking-wide">
+                <span className="text-xs sm:text-sm font-black font-['Syne'] tracking-wide truncate block">
                   MOMBASA ISLAND FACILITY • MOI AVE
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-white/80 font-mono">
+            <div className="flex items-center gap-1.5 text-xs text-white/80 font-mono shrink-0">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>LIVE DESK</span>
+              <span className="text-[10px] sm:text-xs">LIVE DESK</span>
             </div>
           </div>
 
-          <div className="p-6 sm:p-10">
+          <div className="p-4 sm:p-8 lg:p-10">
 
             {/* STEP 1: CUSTOMER CONTACT DETAILS */}
             {currentStep === 1 && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                <div className="border-b border-gray-100 pb-4">
+              <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
+                <div className="border-b border-gray-100 pb-3 sm:pb-4">
                   <div className="flex items-center gap-2 text-[#FF6B4A] mb-1">
-                    <User className="w-5 h-5" />
+                    <User className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="text-xs font-bold uppercase tracking-wider">Step 1 of 4</span>
                   </div>
-                  <h2 className="text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
+                  <h2 className="text-xl sm:text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
                     {lang === 'sw' ? 'Maelezo Yako Binafsi' : 'Primary Customer Information'}
                   </h2>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
@@ -366,7 +367,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
                       Full Legal Name (Jina Kamili) *
@@ -377,7 +378,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Kiprono Cheruiyot"
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium min-h-[44px]"
                       required
                     />
                   </div>
@@ -392,7 +393,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="e.g. 0712 345 678"
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium min-h-[44px]"
                       required
                     />
                     <span className="text-[10px] text-gray-400 block">We send your instant digital QR slip and M-Pesa STK push here.</span>
@@ -408,7 +409,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       value={formData.id_number}
                       onChange={handleChange}
                       placeholder="e.g. 31289456 or PASS-12345"
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium min-h-[44px]"
                       required
                     />
                     <span className="text-[10px] text-gray-400 block">Checked at the counter when you come to claim your bags.</span>
@@ -424,7 +425,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="e.g. kiprono@gmail.com"
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 transition-all font-medium min-h-[44px]"
                     />
                     <span className="text-[10px] text-gray-400 block">Receive an extra PDF receipt copy in your inbox.</span>
                   </div>
@@ -434,7 +435,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2 group"
+                    className="w-full sm:w-auto bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group min-h-[44px]"
                   >
                     <span>{lang === 'sw' ? 'Endelea: Maelezo ya Mzigo' : 'Next: Luggage Details'}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -445,13 +446,13 @@ export default function BookStorage({ lang, setView, prefill }) {
 
             {/* STEP 2: LUGGAGE SELECTION & ATTRIBUTES */}
             {currentStep === 2 && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                <div className="border-b border-gray-100 pb-4">
+              <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
+                <div className="border-b border-gray-100 pb-3 sm:pb-4">
                   <div className="flex items-center gap-2 text-[#FF6B4A] mb-1">
-                    <Luggage className="w-5 h-5" />
+                    <Luggage className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="text-xs font-bold uppercase tracking-wider">Step 2 of 4</span>
                   </div>
-                  <h2 className="text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
+                  <h2 className="text-xl sm:text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
                     {lang === 'sw' ? 'Chagua Saizi na Aina ya Mzigo' : 'Luggage Size & Characteristics'}
                   </h2>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
@@ -464,9 +465,9 @@ export default function BookStorage({ lang, setView, prefill }) {
                   <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
                     Select Size Category *
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
                     {[
-                      { key: 'small', label: 'Small Bag', tag: 'Handbag / Backpack', desc: 'Backpacks, laptop bags, daypacks, handbags', price: 'KES 150', unit: '/day' },
+                      { key: 'small', label: 'Small Bag', tag: 'Handbag / Daypack', desc: 'Backpacks, laptop bags, daypacks, handbags', price: 'KES 150', unit: '/day' },
                       { key: 'medium', label: 'Medium Suitcase', tag: 'Most Popular', desc: 'Standard cabin trolley, medium box, duffel', price: 'KES 250', unit: '/day' },
                       { key: 'large', label: 'Large Trunk', tag: 'Relocation & Long Trips', desc: 'Big 28" suitcase, metal trunk, heavy carton', price: 'KES 400', unit: '/day' },
                       { key: 'xlarge', label: 'Extra Large / Bulky', tag: 'Oversized', desc: 'Mattress, dismantled furniture, appliances', price: 'KES 750', unit: '/day' }
@@ -476,7 +477,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                         <div
                           key={s.key}
                           onClick={() => setFormData(prev => ({ ...prev, item_size: s.key }))}
-                          className={`p-4 rounded-2xl cursor-pointer transition-all border relative ${
+                          className={`p-3.5 sm:p-4 rounded-2xl cursor-pointer transition-all border relative ${
                             isSelected
                               ? 'border-[#FF6B4A] bg-[#FF6B4A]/5 ring-2 ring-[#FF6B4A]/30 shadow-md'
                               : 'border-gray-200 hover:border-gray-300 bg-gray-50/30'
@@ -484,18 +485,18 @@ export default function BookStorage({ lang, setView, prefill }) {
                         >
                           <div className="flex justify-between items-start mb-1">
                             <div>
-                              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#FF6B4A] block">
+                              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FF6B4A] block">
                                 {s.tag}
                               </span>
-                              <strong className="text-base font-black font-['Syne'] text-[#0B2545]">
+                              <strong className="text-sm sm:text-base font-black font-['Syne'] text-[#0B2545]">
                                 {s.label}
                               </strong>
                             </div>
                             <div className="text-right">
-                              <span className="text-base font-black font-['Syne'] text-[#0B2545]">
+                              <span className="text-sm sm:text-base font-black font-['Syne'] text-[#0B2545]">
                                 {s.price}
                               </span>
-                              <span className="text-[10px] text-gray-500 block">{s.unit}</span>
+                              <span className="text-[10px] text-gray-500 block font-mono">{s.unit}</span>
                             </div>
                           </div>
                           <p className="text-xs text-gray-500 mt-1">{s.desc}</p>
@@ -505,7 +506,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-1">
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
                       Item Category / Type *
@@ -514,7 +515,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="item_type"
                       value={formData.item_type}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium min-h-[44px]"
                     >
                       <option value="Travel Suitcase">Travel Suitcase (Sanduku)</option>
                       <option value="Backpack / Rucksack">Backpack / Daypack (Begi la mgongoni)</option>
@@ -537,7 +538,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="quantity"
                       value={formData.quantity}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold min-h-[44px]"
                     />
                   </div>
                 </div>
@@ -552,11 +553,11 @@ export default function BookStorage({ lang, setView, prefill }) {
                     value={formData.description}
                     onChange={handleChange}
                     placeholder="e.g. Navy blue Delsey suitcase with yellow ribbon on handle, lock code 449"
-                    className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium"
+                    className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium"
                   ></textarea>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
@@ -576,11 +577,11 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </label>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex justify-between">
+                <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-3">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
-                    className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -588,7 +589,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2 group"
+                    className="w-full sm:w-auto bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group min-h-[44px]"
                   >
                     <span>{lang === 'sw' ? 'Endelea: Tarehe na Saa' : 'Next: Dates & Schedule'}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -599,21 +600,21 @@ export default function BookStorage({ lang, setView, prefill }) {
 
             {/* STEP 3: DATES, SCHEDULE & DURATION */}
             {currentStep === 3 && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                <div className="border-b border-gray-100 pb-4">
+              <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
+                <div className="border-b border-gray-100 pb-3 sm:pb-4">
                   <div className="flex items-center gap-2 text-[#FF6B4A] mb-1">
-                    <Calendar className="w-5 h-5" />
+                    <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="text-xs font-bold uppercase tracking-wider">Step 3 of 4</span>
                   </div>
-                  <h2 className="text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
+                  <h2 className="text-xl sm:text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
                     {lang === 'sw' ? 'Tarehe na Ratiba ya Uhifadhi' : 'Drop-off & Expected Collection'}
                   </h2>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    Facility opens from 7:00 AM to 8:00 PM daily. You can extend online anytime if your stay is prolonged.
+                    Facility opens from 6:30 AM to 8:30 PM daily. You can extend online anytime.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-[#0B2545] uppercase tracking-wider">
                       Drop-off Date (Tarehe ya Kuleta) *
@@ -623,7 +624,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="dropoff_date"
                       value={formData.dropoff_date}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold text-[#0B2545]"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold text-[#0B2545] min-h-[44px]"
                       required
                     />
                   </div>
@@ -636,7 +637,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="dropoff_time"
                       value={formData.dropoff_time}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium min-h-[44px]"
                     >
                       <option value="07:00 AM">07:00 AM (Early Arrival)</option>
                       <option value="09:00 AM">09:00 AM</option>
@@ -657,7 +658,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="expected_pickup_date"
                       value={formData.expected_pickup_date}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold text-[#0B2545]"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-bold text-[#0B2545] min-h-[44px]"
                       required
                     />
                   </div>
@@ -670,7 +671,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                       name="storage_reason"
                       value={formData.storage_reason}
                       onChange={handleChange}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium"
+                      className="w-full text-base sm:text-sm px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:border-[#13B5B1] focus:ring-2 focus:ring-[#13B5B1]/20 font-medium min-h-[44px]"
                     >
                       <option value="House hunting">House hunting in Mombasa (Kusaka nyumba)</option>
                       <option value="Interview / Exams">Job interview / Exams (Usaili au mitihani)</option>
@@ -683,12 +684,12 @@ export default function BookStorage({ lang, setView, prefill }) {
                 </div>
 
                 {/* Live Cost calculation summary banner */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-[#0B2545] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-[#13B5B1]/30">
-                  <div className="space-y-1">
-                    <span className="text-[11px] text-[#13B5B1] font-mono tracking-wider uppercase font-bold">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#0B2545] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 border border-[#13B5B1]/30">
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <span className="text-[10px] sm:text-[11px] text-[#13B5B1] font-mono tracking-wider uppercase font-bold">
                       Calculated Duration & Rate
                     </span>
-                    <div className="text-base sm:text-lg font-bold">
+                    <div className="text-sm sm:text-lg font-bold">
                       {calculatedDays} day(s) storage for {formData.quantity} {formData.item_size} item(s)
                     </div>
                     <span className="text-xs text-gray-300 block">
@@ -697,18 +698,18 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </div>
 
                   <div className="sm:text-right bg-white/10 sm:bg-transparent p-3 sm:p-0 rounded-xl w-full sm:w-auto">
-                    <span className="text-[11px] text-gray-300 block uppercase font-mono">Estimated Total</span>
-                    <span className="text-2xl sm:text-3xl font-black font-['Syne'] text-amber-400">
+                    <span className="text-[10px] sm:text-[11px] text-gray-300 block uppercase font-mono">Estimated Total</span>
+                    <span className="text-xl sm:text-3xl font-black font-['Syne'] text-amber-400">
                       KES {totalCost.toLocaleString()}
                     </span>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex justify-between">
+                <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-3">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -716,7 +717,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-2 group"
+                    className="w-full sm:w-auto bg-[#FF6B4A] hover:bg-[#e85535] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group min-h-[44px]"
                   >
                     <span>{lang === 'sw' ? 'Endelea: Chaguo la Malipo' : 'Next: Payment Selection'}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -727,31 +728,31 @@ export default function BookStorage({ lang, setView, prefill }) {
 
             {/* STEP 4: PAYMENT OPTIONS & CONFIRMATION TRIGGER */}
             {currentStep === 4 && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                <div className="border-b border-gray-100 pb-4">
+              <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
+                <div className="border-b border-gray-100 pb-3 sm:pb-4">
                   <div className="flex items-center gap-2 text-[#FF6B4A] mb-1">
-                    <CreditCard className="w-5 h-5" />
+                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="text-xs font-bold uppercase tracking-wider">Step 4 of 4</span>
                   </div>
-                  <h2 className="text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
+                  <h2 className="text-xl sm:text-2xl font-black font-['Syne',sans-serif] text-[#0B2545]">
                     {lang === 'sw' ? 'Chagua Njia ya Kulipa' : 'Select Payment Method'}
                   </h2>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    Pay seamlessly with instant Safaricom M-Pesa STK push or pay cash/M-Pesa when handing over items at our counter.
+                    Pay seamlessly with instant Safaricom M-Pesa STK push or pay cash/M-Pesa at our counter on drop-off.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                   {/* Option A: M-Pesa STK */}
                   <div
                     onClick={() => setFormData(prev => ({ ...prev, payment_choice: 'mpesa_stk' }))}
-                    className={`p-5 rounded-2xl cursor-pointer transition-all border ${
+                    className={`p-4 sm:p-5 rounded-2xl cursor-pointer transition-all border ${
                       formData.payment_choice === 'mpesa_stk'
                         ? 'border-emerald-600 bg-emerald-50/50 ring-2 ring-emerald-500 shadow-md'
                         : 'border-gray-200 hover:border-gray-300 bg-gray-50/30'
                     }`}
                   >
-                    <div className="flex justify-between items-center mb-2">
+                    <div className="flex justify-between items-center mb-1.5 sm:mb-2">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                         <strong className="text-sm font-bold text-emerald-950">Pay with M-Pesa (STK Push)</strong>
@@ -768,13 +769,13 @@ export default function BookStorage({ lang, setView, prefill }) {
                   {/* Option B: Pay at Counter */}
                   <div
                     onClick={() => setFormData(prev => ({ ...prev, payment_choice: 'counter' }))}
-                    className={`p-5 rounded-2xl cursor-pointer transition-all border ${
+                    className={`p-4 sm:p-5 rounded-2xl cursor-pointer transition-all border ${
                       formData.payment_choice === 'counter'
                         ? 'border-[#0B2545] bg-[#0B2545]/5 ring-2 ring-[#0B2545] shadow-md'
                         : 'border-gray-200 hover:border-gray-300 bg-gray-50/30'
                     }`}
                   >
-                    <div className="flex justify-between items-center mb-2">
+                    <div className="flex justify-between items-center mb-1.5 sm:mb-2">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-[#0B2545]"></span>
                         <strong className="text-sm font-bold text-[#0B2545]">Pay on Drop-off (Counter)</strong>
@@ -791,12 +792,12 @@ export default function BookStorage({ lang, setView, prefill }) {
 
                 {/* If M-Pesa chosen: full vs deposit */}
                 {formData.payment_choice === 'mpesa_stk' && (
-                  <div className="p-5 rounded-2xl bg-[#F6EBD9]/40 border border-[#F6EBD9] space-y-3">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-[#F6EBD9]/40 border border-[#F6EBD9] space-y-3">
                     <span className="text-xs font-bold text-[#0B2545] uppercase tracking-wider block">
                       Choose Payment Breakdown
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <label className={`p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                      <label className={`p-3.5 sm:p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                         formData.payment_type === 'full' ? 'border-[#FF6B4A] bg-white ring-2 ring-[#FF6B4A]/20 shadow-xs' : 'border-gray-200 bg-white/70'
                       }`}>
                         <div className="flex items-center gap-2.5">
@@ -813,12 +814,12 @@ export default function BookStorage({ lang, setView, prefill }) {
                             <span className="text-[10px] text-gray-500">Zero balance due at pick-up</span>
                           </div>
                         </div>
-                        <span className="text-base font-black font-['Syne'] text-[#0B2545]">
+                        <span className="text-sm sm:text-base font-black font-['Syne'] text-[#0B2545]">
                           KES {totalCost.toLocaleString()}
                         </span>
                       </label>
 
-                      <label className={`p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      <label className={`p-3.5 sm:p-4 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                         formData.payment_type === 'deposit' ? 'border-[#FF6B4A] bg-white ring-2 ring-[#FF6B4A]/20 shadow-xs' : 'border-gray-200 bg-white/70'
                       }`}>
                         <div className="flex items-center gap-2.5">
@@ -832,10 +833,10 @@ export default function BookStorage({ lang, setView, prefill }) {
                           />
                           <div>
                             <span className="text-xs font-bold text-[#0B2545] block">50% Advance Deposit</span>
-                            <span className="text-[10px] text-gray-500">Pay remaining KES {depositAmount.toLocaleString()} upon pickup</span>
+                            <span className="text-[10px] text-gray-500">Remaining KES {depositAmount.toLocaleString()} upon pickup</span>
                           </div>
                         </div>
-                        <span className="text-base font-black font-['Syne'] text-[#0B2545]">
+                        <span className="text-sm sm:text-base font-black font-['Syne'] text-[#0B2545]">
                           KES {depositAmount.toLocaleString()}
                         </span>
                       </label>
@@ -844,7 +845,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                 )}
 
                 {/* Terms and conditions agreement checkbox */}
-                <div className="p-4 rounded-2xl border border-gray-200 bg-gray-50/50">
+                <div className="p-3.5 sm:p-4 rounded-2xl border border-gray-200 bg-gray-50/50">
                   <label className="flex items-start gap-3 text-xs text-gray-700 cursor-pointer">
                     <input
                       type="checkbox"
@@ -860,11 +861,11 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </label>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex justify-between">
+                <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between gap-3">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(3)}
-                    className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 border border-gray-200 text-gray-700 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gray-50 flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -874,7 +875,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                     type="button"
                     onClick={handleSubmitBooking}
                     disabled={isSubmitting || !formData.terms_agreed}
-                    className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
@@ -894,9 +895,9 @@ export default function BookStorage({ lang, setView, prefill }) {
 
             {/* STEP 5: BOARDING PASS MANIFEST CONFIRMATION & QR */}
             {currentStep === 5 && bookingSuccess && (
-              <div className="space-y-8 text-center animate-in zoom-in-95 duration-500">
-                <div className="w-20 h-20 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-md">
-                  <CheckCircle className="w-12 h-12" />
+              <div className="space-y-6 sm:space-y-8 text-center animate-in zoom-in-95 duration-500">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-md">
+                  <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12" />
                 </div>
 
                 <div>
@@ -904,10 +905,10 @@ export default function BookStorage({ lang, setView, prefill }) {
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Booking Confirmed • Imethibitishwa!</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-black font-['Syne',sans-serif] text-[#0B2545] mt-2">
+                  <h2 className="text-2xl sm:text-4xl font-black font-['Syne',sans-serif] text-[#0B2545] mt-2">
                     Karibu Sana, {bookingSuccess.customer_name}!
                   </h2>
-                  <p className="text-xs sm:text-sm text-gray-600 max-w-md mx-auto mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 max-w-md mx-auto mt-1 px-2">
                     Your luggage tag is registered in the Mombasa storage desk. Present your reference code or digital QR slip on arrival.
                   </p>
                 </div>
@@ -919,25 +920,25 @@ export default function BookStorage({ lang, setView, prefill }) {
                     <div className="w-2.5 h-2.5 rounded-full bg-[#0B2545]/30"></div>
                   </div>
 
-                  <div className="p-6 pt-10 border-b border-dashed border-gray-300">
+                  <div className="p-5 sm:p-6 pt-9 sm:pt-10 border-b border-dashed border-gray-300">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500">MZINGO POINT MSA</span>
                       <span className="text-[10px] font-mono font-bold bg-[#FF6B4A] text-white px-2 py-0.5 rounded">CLAIM TAG</span>
                     </div>
 
                     <div className="text-xs text-gray-500 uppercase tracking-wider">Reference Code</div>
-                    <div className="text-2xl sm:text-3xl font-black font-mono tracking-widest text-[#0B2545]">
+                    <div className="text-xl sm:text-3xl font-black font-mono tracking-widest text-[#0B2545] truncate">
                       {bookingSuccess.booking_ref}
                     </div>
                   </div>
 
                   {/* QR Code section */}
                   {bookingSuccess.qrCodeDataUrl && (
-                    <div className="p-6 flex flex-col items-center bg-white">
+                    <div className="p-4 sm:p-6 flex flex-col items-center bg-white">
                       <img
                         src={bookingSuccess.qrCodeDataUrl}
                         alt="Booking QR Code"
-                        className="w-44 h-44 border-2 border-gray-100 p-2 rounded-2xl shadow-sm bg-white"
+                        className="w-36 h-36 sm:w-44 sm:h-44 border-2 border-gray-100 p-2 rounded-2xl shadow-sm bg-white"
                       />
                       <span className="text-[10px] font-mono text-gray-400 mt-2">Scan at Moi Avenue Counter to check-in/out</span>
                     </div>
@@ -951,7 +952,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   </div>
 
                   {/* Details grid */}
-                  <div className="p-6 bg-white/90 space-y-3 text-xs text-gray-700">
+                  <div className="p-5 sm:p-6 bg-white/90 space-y-3 text-xs text-gray-700">
                     <div className="grid grid-cols-2 gap-3 pb-3 border-b border-gray-100">
                       <div>
                         <span className="text-[10px] font-mono text-gray-400 uppercase block">Drop-off:</span>
@@ -975,7 +976,7 @@ export default function BookStorage({ lang, setView, prefill }) {
 
                     {bookingSuccess.balance_amount > 0 && (
                       <div className="flex justify-between items-center text-xs text-rose-700 font-bold bg-rose-50 p-2.5 rounded-xl">
-                        <span>Balance Due at Collection:</span>
+                        <span>Balance Due:</span>
                         <span>KES {bookingSuccess.balance_amount.toLocaleString()}</span>
                       </div>
                     )}
@@ -983,14 +984,14 @@ export default function BookStorage({ lang, setView, prefill }) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 pt-2">
                   <button
                     type="button"
                     onClick={() => setShowReceiptModal(true)}
-                    className="bg-[#0B2545] hover:bg-[#163a63] text-white px-6 py-3 rounded-xl text-xs font-bold shadow-md flex items-center gap-2 transition-all"
+                    className="w-full sm:w-auto bg-[#0B2545] hover:bg-[#163a63] text-white px-6 py-3.5 rounded-xl text-xs font-bold shadow-md flex items-center justify-center gap-2 transition-all min-h-[44px]"
                   >
                     <Printer className="w-4 h-4 text-[#13B5B1]" />
-                    <span>Print Receipt & Luggage Tag</span>
+                    <span>Print Receipt & Tag</span>
                   </button>
 
                   <a
@@ -999,7 +1000,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                     )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3 rounded-xl text-xs font-bold shadow-md flex items-center gap-2 transition-all"
+                    className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3.5 rounded-xl text-xs font-bold shadow-md flex items-center justify-center gap-2 transition-all min-h-[44px]"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Send to WhatsApp</span>
@@ -1008,7 +1009,7 @@ export default function BookStorage({ lang, setView, prefill }) {
                   <button
                     type="button"
                     onClick={() => { setView('track'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl text-xs font-bold hover:bg-gray-50 transition-all"
+                    className="w-full sm:w-auto px-6 py-3.5 border border-gray-300 text-gray-700 rounded-xl text-xs font-bold hover:bg-gray-50 transition-all min-h-[44px]"
                   >
                     Track Live Booking
                   </button>

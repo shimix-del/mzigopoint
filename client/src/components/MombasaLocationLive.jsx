@@ -23,8 +23,8 @@ export default function MombasaLocationLive({ lang }) {
   return (
     <div className="bg-white rounded-3xl border-2 border-amber-900/15 overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-12">
       {/* Information Side */}
-      <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between space-y-6">
-        <div className="space-y-5">
+      <div className="lg:col-span-5 p-5 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
+        <div className="space-y-4 sm:space-y-5">
           {/* Live Open / Closed Indicator */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono font-bold tracking-wider uppercase shadow-xs">
             {isOpenNow ? (
@@ -40,7 +40,7 @@ export default function MombasaLocationLive({ lang }) {
             )}
           </div>
 
-          <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-[#0B2545]">
+          <h3 className="font-display font-extrabold text-xl sm:text-3xl text-[#0B2545] leading-tight">
             Moi Avenue, Opp. Mombasa Tusks
           </h3>
 
@@ -48,7 +48,7 @@ export default function MombasaLocationLive({ lang }) {
             Positioned at the bustling crossroad of Mombasa Island. Quick 5-minute hop from Likoni Ferry, SGR shuttle drop-offs, and bus stations.
           </p>
 
-          <div className="space-y-3 pt-2 text-xs text-gray-700">
+          <div className="space-y-3 pt-1 text-xs text-gray-700">
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 text-[#FF6B4A] shrink-0 mt-0.5" />
               <span>Moi Avenue, Near Central Post Office, Mombasa CBD, Kenya</span>
@@ -66,12 +66,12 @@ export default function MombasaLocationLive({ lang }) {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-dashed border-gray-200 flex flex-wrap gap-3">
+        <div className="pt-4 border-t border-dashed border-gray-200 flex flex-col sm:flex-row gap-3">
           <a
             href="https://maps.google.com/?q=Moi+Avenue+Mombasa+Tusks"
             target="_blank"
             rel="noreferrer"
-            className="bg-[#0B2545] hover:bg-[#061527] text-white px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider shadow flex items-center gap-2 transition-colors cursor-pointer"
+            className="w-full sm:w-auto bg-[#0B2545] hover:bg-[#061527] text-white px-5 py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[44px]"
           >
             <Navigation className="w-4 h-4 text-[#FF6B4A]" />
             <span>Get Directions</span>
@@ -81,7 +81,7 @@ export default function MombasaLocationLive({ lang }) {
             href="https://wa.me/254712345678"
             target="_blank"
             rel="noreferrer"
-            className="bg-[#25D366] hover:bg-[#20ba59] text-white px-5 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider shadow flex items-center gap-2 transition-colors cursor-pointer"
+            className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20ba59] text-white px-5 py-3.5 rounded-2xl text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[44px]"
           >
             <MessageSquare className="w-4 h-4" />
             <span>WhatsApp Us</span>
@@ -90,11 +90,11 @@ export default function MombasaLocationLive({ lang }) {
       </div>
 
       {/* Stylized Google Map Visual */}
-      <div className="lg:col-span-7 bg-[#F6EBD9] min-h-[360px] relative border-t lg:border-t-0 lg:border-l-2 border-amber-900/15">
+      <div className="lg:col-span-7 bg-[#F6EBD9] min-h-[260px] sm:min-h-[360px] relative border-t lg:border-t-0 lg:border-l-2 border-amber-900/15">
         <iframe
           title="Mzingo Point Mombasa Location"
           src="https://maps.google.com/maps?q=Moi%20Avenue%20Mombasa%20Tusks&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          className="w-full h-full min-h-[360px] border-0"
+          className="w-full h-full min-h-[260px] sm:min-h-[360px] border-0"
           loading="lazy"
         ></iframe>
       </div>

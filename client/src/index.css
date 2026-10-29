@@ -13,6 +13,13 @@
     --color-charcoal: #12161A;
   }
 
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     background-color: #F6EBD9;
     color: #12161A;
@@ -20,11 +27,30 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* Prevent iOS Safari 16px auto-zoom on input focus */
+  @media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
   }
 
   h1, h2, h3, h4, .font-display {
     font-family: 'Syne', sans-serif;
     letter-spacing: -0.02em;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
@@ -43,23 +69,23 @@
 .luggage-tag {
   position: relative;
   clip-path: polygon(
-    24px 0%,
-    calc(100% - 24px) 0%,
-    100% 24px,
+    20px 0%,
+    calc(100% - 20px) 0%,
+    100% 20px,
     100% 100%,
     0% 100%,
-    0% 24px
+    0% 20px
   );
 }
 
 .luggage-tag-horizontal {
   position: relative;
   clip-path: polygon(
-    0% 20px,
-    20px 0%,
+    0% 16px,
+    16px 0%,
     100% 0%,
-    100% calc(100% - 20px),
-    calc(100% - 20px) 100%,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
     0% 100%
   );
 }
@@ -114,6 +140,11 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* Custom smooth horizontal table scroll indicator */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Reduced motion accessibility */
